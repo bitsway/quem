@@ -1,6 +1,6 @@
 
 //online
-var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150516/";
+var apipath="http://e2.businesssolutionapps.com/quem/syncmobile/";
 
 //local
 //var apipath="http://127.0.0.1:8000/quem/syncmobile/";
@@ -352,7 +352,7 @@ function onFailA(message) {
 //------------------------------------------------------------------------------
 //File upload 
 function uploadPhotoTruckPlate(imageURI, imageName) {	
-	winTruckInfo();
+	//winTruckInfo();
     var options = new FileUploadOptions();
     options.fileKey="upload";
 //    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
@@ -367,7 +367,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/quem/quem_image_sync/fileUploader/"),winAch,fail,options);
+	ft.upload(imageURI, encodeURI("http://e2.businesssolutionapps.com/quem/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
 	//ft.upload(imageURI, encodeURI("http://127.0.0.1:8000/welcome/wab_sync/fileUploader/"),winAch,fail,options);
 	
 }
