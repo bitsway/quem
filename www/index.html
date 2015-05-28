@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!-- Designed and developed by Business Solution Apps team -->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>QueM</title>
+		<link rel="stylesheet" href="static/my.css" />
+		<link rel="stylesheet" href="static/themes/c.min.css" />
+		<link rel="stylesheet" href="static/themes/jquery.mobile.icons.min.css" />
+		
+		<link rel="stylesheet" href="static/jquery.mobile-1.4.0/jquery.mobile-1.4.0.min.css" />
+        <script src="static/jquery/1.10.2/jquery-1.10.2.min.js"></script>
+        <script src="static/jquery.mobile-1.4.0/jquery.mobile-1.4.0.min.js"></script>
+		<script src="static/qmanage.js"></script>		
+		
+	<script>
+	$(document).ready(function(){
+		$("#wait_image_login").hide();
+		$("#loginButton").show();
+		
+		first_page();
+		
+	});
+	
+
+    </script>
+	<style>
+	table.tbl_preview tr td { border:1px solid #5FAFAF; background-color:#EFF8F8;}
+	
+	</style>
+	</head>
+	
+    <body>
+	
+		<!-- =====================Home page=============== -->
+		<div data-theme="c" data-role="page" id="pageHome">
+			<div data-role="panel" id="routePanel" data-display="overlay" style="width:60%; background-color:#FFF">
+				<!-- panel content goes here unilogo1.jpg-->
+				<div align="center">
+                <img style="width:100%" src="lafarge.png" alt="GP" />
+                <br>
+				</div>
+                
+				<br><br><br><br>
+                
+				<ul data-role="listview">                    
+                    <br><br>
+                    <div style="background:#008A8A; height:1px"></div>
+                    <li ><div ><a href="#login" ><img src="sync.png"></a></div></li> 
+                    <div style="background:#008A8A; height:1px"></div>
+                </ul>
+                
+				<div style="margin:100%;"></div>
+				<!--<img src="lafarge.png" alt="Grameen Phone" />-->
+			</div><!-- /panel -->
+			
+            <div data-theme="c" data-role="header" data-position="fixed" >			
+				<a  data-role="button" href="#routePanel" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+                <a  data-role="button" onClick="exit();" class="ui-btn-right" style="padding:4px;"><img src="exit.png" style="height:25px; width:25px;"></a>
+                
+                <!--<a data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-right ui-icon-power ui-btn-icon-notext " onClick="exit();"><img src="exit.png"></a>-->
+                <h3>Que Management</h3>
+            </div>
+            
+			<img style="width:100%; height:100px"  src="images_2.jpg">
+            <div data-role="content">
+				
+				<div id="myerror" style="color:#C00;">				
+				</div>
+                
+                <div data-role="fieldcontain" style="font-size:16px;">
+                	<div class="ui-grid-a" style="text-align:center;">
+							<a data-role="button" onClick="newEntry();" ><!--<img src="NewTruck.png">-->New Truck Entry</a> 
+					</div>
+                    <div class="ui-grid-a" style="text-align:center;">
+							<a data-role="button" onClick="parkingListPage();" ><!--<img src="QueList.png">-->Parking</a>
+					</div>
+                    
+					<div class="ui-grid-a" style="text-align:center;">
+							<a data-role="button" onClick="toFerryListPage();" ><!--<img src="QueList.png">-->Que</a>
+					</div>
+                    
+					<div class="ui-grid-a" style="text-align:center;">
+                            <a data-role="button"  onClick="onFerryListPage();"><!--<img src="all_list.png">-->Parking 2</a>
+					</div>
+                    <div class="ui-grid-a" style="text-align:center;">
+                            <a data-role="button"  onClick="searchListPage();"><!--<img src="all_list.png">-->Search</a>
+					</div>
+                                   
+                </div>
+                 
+                </div>	
+                <div data-theme="c" data-role="footer" data-position="fixed"></div>			
+            </div>
+		
+
+	        <!--===================== pageSync ==================-->
+		<div data-theme="c" data-role="page" id="login">
+            <div data-theme="c" data-role="header" data-position="fixed">				
+				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+                <h3>Authorization</h3>
+            </div>
+			
+            <div data-role="content">
+            	<div id="error_login" style="color:#C00"></div>                
+                    <form>					
+                        <input name="user_id" id="user_id"  value="" type="text" placeholder="Mobile No">
+                        <input type="text" name="user_pass" id="user_pass"  value="" placeholder="Password">
+                    </form>						
+				
+				<a data-role="button" id="loginButton" onClick="check_user();" >Sync</a>
+				<div align="center"><img id="wait_image_login" style="" width="50px;" src="loading.gif" alt=""></div>
+                                
+                <br><br><br><br><br><br><br><br><br><br>
+                
+               <!-- <input name="clear_auth_check" id="clear_auth_check" data-mini="true" type="checkbox" value="Yes">
+                <label for="clear_auth_check">Confirm Clear Authorization</label>
+                
+                <a data-role="button" onClick="clear_autho();" >Clear Authorization</a>-->
+                <!--<a onClick="clear_autho()" href="#login">Clear Authorization</a>    -->          
+                <br><br><br><br><br><br>
+                       
+            </div>
+			
+        <!-- ==========footer====== -->	
+        <div data-theme="c" data-role="footer" data-position="fixed"></div>
+        
+        </div>		
+
+
+
+
+<!--=========================== Profile =============-->
+<style>
+.prof_label{	
+	font-size:13px
+	}
+
+</style>
+<div data-theme="c" data-role="page" id="newEntry">
+  <div data-theme="c" data-role="header" data-position="fixed"> 	
+    <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
+     <h3>New Entry</h3>
+  </div>
+  
+  <div data-role="content"> 
+  	
+   <!-- <div align="right" width="100%" height="150px" ><img src="" width="100%" height="150px" alt="Shop Photo" id="clientProfileImage"></div>-->
+    
+  	<!--<ul data-inset="true"  data-role="listview">
+        <li>
+            <div><b>Market :</b> <span class="prof_market_class"></span></div>
+            <div><b>Distributor :</b> <span class="prof_distributor_class"></span></div>
+            <div><b>Retailer ID :</b> <span class="prof_retailer_class" style="font-weight:bold"></span></div>
+        </li>
+    </ul>-->
+    
+    <ul data-role="listview" data-inset="true" data-theme="c" >
+        <li class="ui-field-contain" style="background-color:#CCC; font-weight:bold;">Palate No:<font color="#C40000" style="font-size:20px">*</font></li>
+        <li class="ui-field-contain">
+            <input name="plateNo" id="plateNo" placeholder="" value="" type="text" maxlength="20" style="font-size:200%; font-weight:bold; text-align:center;" >
+        </li>
+    </ul>
+    <ul data-role="listview" data-inset="true" data-theme="c" >
+        <a data-role="button" id="btn_take_pic" onClick="getTruckPalateImage();" class="ui-btn" >Take Picture<font color="#C40000" style="font-size:20px">*</font></a>       
+        <img src="" width="128" height="128" alt="Image" id="myImageA">
+        <input name="platePhoto" id="platePhoto" value=""   type="hidden">            
+    </ul>
+     
+        
+    <table width="100%">
+    	<tbody bgcolor="#BFDFDF">        
+         <tr style="background-color:#CCC"><td colspan="2"><strong>Transporter/Customer:<font color="#C40000" style="font-size:20px">*</font></strong></td></tr>
+    	<tr style="border-color: #F33"><td colspan="2" style="border-color: #F33;">
+            <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
+                <input type="radio" name="transCus" id="trans" value="Transporter">
+                <label for="trans">Transporter</label>
+                <input type="radio" name="transCus" id="cus" value="Customer">
+                <label for="cus">Customer</label>                   
+            </fieldset>
+        </td></tr>
+        
+        <tr><td width="30%" class="prof_label" >Name<font color="#C40000" style="font-size:20px">*</font></td><td><input name="trnCusName" id="trnCusName" placeholder="" value="" type="text" maxlength="50" ></td></tr>        
+        
+        <tr style="background-color:#CCC"><td colspan="2"><strong>Driver's Name:</strong></td></tr>
+        <tr><td width="30%" class="prof_label" >Name<font color="#C40000" style="font-size:20px">*</font></td><td><input name="drMsName" id="drMsName" placeholder="" value="" type="text" maxlength="50" ></td></tr>
+        <tr><td width="30%" class="prof_label" >Mobile No<font color="#C40000" style="font-size:20px">*</font></td><td><input name="mobileNo" id="mobileNo" placeholder="" value="" type="number" ></td></tr>
+        <tr style="background-color:#CCC; height:20px;"><td colspan="2"></td></tr>
+        <tr><td width="30%" class="prof_label" >Capecity<font color="#C40000" style="font-size:20px">*</font></td><td><input name="numOfBag" id="numOfBag" placeholder="Bag" value="" type="number" maxlength="4" ></td></tr>
+        <tr><td width="30%" class="prof_label">Party<font color="#C40000" style="font-size:20px">*</font></td><td>
+            <fieldset data-role="controlgroup" >
+                <input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();">
+                <label for="cus_pickup">Customer Pick Up</label>
+                <input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();">
+                <label for="tr_del">Delivered</label>
+                <input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();">
+                <label for="tr_st">ST</label>
+            </fieldset>
+        </td></tr>
+         <tr id="trans_depot"><td width="30%" class="prof_label">Depot ID<font color="#C40000" style="font-size:20px">*</font></td><td>
+        <input name="tr_depot_id" id="tr_depot_id" placeholder="" value="" type="text" maxlength="20" >
+        </td></tr>
+        <tr><td width="30%" class="prof_label">Token</td><td>
+        <input name="tokenNo" id="tokenNo" placeholder="" value="" type="text" maxlength="20" >
+        </td></tr>
+                
+    	</tbody>       
+  	</table>
+  	<br>
+	<br>
+
+	<a  data-role="button" id="btnTruckInfo" onClick="truckInfoSubmit();" >Submit</a>	
+    
+    <br>
+	<div id="err_truck_info" style="color:#C00"></div><br>
+    
+    <br>
+        <div align="center"><img id="wait_image_to_submit" style="" width="50px;" src="loading.gif" alt=""></div>
+    <br>
+    <br>
+	<br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    
+  </div>
+
+
+</div> 
+
+
+<!-- ===================== Submit Success Page================== -->
+
+<div data-theme="c" data-role="page" id="successPage">
+    <div data-theme="c" data-role="header" data-position="fixed">
+    <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
+        <h3>Success</h3>
+    </div>
+    
+    <div data-role="content">
+        <div id="success_msg" style="color:#C00; text-align:center;"></div>	
+        
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <a data-role="button" onClick="newEntry();" >Another Entry</a>
+               
+        
+    </div><!--/cont-->
+    
+    <div data-theme="c" data-role="footer" data-position="fixed"></div>			
+ </div><!--/page-->
+
+
+
+<!-- ===================== parking Page================== -->
+
+<div data-theme="c" data-role="page" id="page_parking_show">
+    <div data-theme="c" data-role="header" data-position="fixed">
+    <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
+        <h3>Parking</h3>
+    </div>
+    
+    <div data-role="content">
+        <div id="error_to_ferry_list" style="color:#C00"></div>	
+        
+        <a data-role="button" onClick="parkingListPage();">Refresh</a>
+        
+        <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
+        	<tr >
+              <td style="width:50%;" ><strong>SL No<br>
+Plate No</strong></td>
+              <td style="width:50%;" ><strong>Driver Name<br>
+Driver Mobile</strong></td>              
+            </tr>  
+        
+        </table>
+        <table id="tbl_show_parking"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <br>
+        <div align="center"><img id="wait_image_parking_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        
+    </div><!--/cont-->
+    
+    <div data-theme="c" data-role="footer" data-position="fixed"></div>			
+ </div><!--/page-->
+
+
+<!-- ===================== To ferry Page================== -->
+
+<div data-theme="c" data-role="page" id="page_to_ferry_show">
+    <div data-theme="c" data-role="header" data-position="fixed">
+    <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
+        <h3>Que</h3>
+    </div>
+    
+    <div data-role="content">
+        <div id="error_to_ferry_list" style="color:#C00"></div>	
+        
+        <a data-role="button" onClick="toFerryListPage();">Refresh</a>
+        
+        <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
+        	<tr >
+              <td style="width:50%;" ><strong>SL No<br>
+Plate No</strong></td>
+              <td style="width:50%;" ><strong>Driver Name<br>
+Driver Mobile</strong></td>              
+            </tr></table>
+        <table id="tbl_show_to_ferry"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <br>
+        <div align="center"><img id="wait_image_to_ferry_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        
+    </div><!--/cont-->
+    
+    <div data-theme="c" data-role="footer" data-position="fixed"></div>			
+ </div><!--/page-->
+
+
+<!-- ===================== On ferry Page================== -->
+
+<div data-theme="c" data-role="page" id="page_on_ferry_show">
+    <div data-theme="c" data-role="header" data-position="fixed">
+    <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
+        <h3>Parking 2</h3>
+    </div>
+    
+    <div data-role="content">
+        <div id="error_on_ferry_list" style="color:#C00"></div>	
+        
+        <a data-role="button" onClick="onFerryListPage();">Refresh</a>
+        
+        <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
+        	<tr >
+              <td style="width:50%;" ><strong>SL No<br>
+Plate No</strong></td>
+              <td style="width:50%;" ><strong>Driver Name<br>
+Driver Mobile</strong></td>              
+            </tr></table>
+        <table id="tbl_show_on_ferry"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <br>
+        <div align="center"><img id="wait_image_on_ferry_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        
+    </div><!--/cont-->
+    
+    <div data-theme="c" data-role="footer" data-position="fixed"></div>			
+ </div><!--/page-->
+
+
+   
+<!--===================== search page ==================-->
+		<div data-theme="c" data-role="page" id="page_search_show">
+            <div data-theme="c" data-role="header" data-position="fixed">				
+				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+                <h3>Search</h3>
+            </div>
+			
+            <div data-role="content">
+            	<div id="error_search" style="color:#C00"></div>
+                  <input name="search_sl" id="search_sl"  value="" type="text" placeholder="SL No">     
+                          
+				<a data-role="button" id="btnSearch" onClick="searchAllList();" >Search</a>
+				<div align="center"><img id="wait_image_search" style="" width="50px;" src="loading.gif" alt=""></div>
+                 
+                 <table id="tbl_show_all" border="0" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; font-size:70%;">
+                    <tr >
+                      <td style="width:40%;" ><strong>SL No</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_sl_no"></td>              
+                    </tr>
+                    <tr >
+                      <td style="width:40%;" ><strong>Plate No</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_plt_no" ></td>              
+                    </tr>
+                    <tr >
+                      <td style="width:40%;" ><strong>Driver`s Name</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_dr_name" ></td>              
+                    </tr>
+                    <tr >
+                      <td style="width:40%;" ><strong>Driver`s Mobile No</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_dr_mobile_no" ></td>              
+                    </tr>
+                    <tr >
+                      <td style="width:40%;" ><strong>TransPorter/Customer</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_tr_cus" ></td>              
+                    </tr>
+                     <tr >
+                      <td style="width:40%;" ><strong>Transporter/Customer Mobile No</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_tr_cus_mobile_no" ></td>              
+                    </tr>
+                     <tr >
+                      <td style="width:40%;" ><strong>Capacity</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_capacity" ></td>              
+                    </tr>
+                     <tr >
+                      <td style="width:40%;" ><strong>Party</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_party" ></td>              
+                    </tr>
+                     <tr >
+                      <td style="width:40%;" ><strong>Token</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_token" ></td>              
+                    </tr>
+                    <tr >
+                      <td style="width:40%;" ><strong>Status</strong></td>
+                      <td style="width:1%;" >:</td>
+                      <td style="width:50%;" id="s_status" ></td>              
+                    </tr>
+           		 </table>
+                 
+                      
+                <br><br><br><br><br><br><br><br><br><br>
+                
+            </div>
+			
+        <!-- ==========footer====== -->	
+        <div data-theme="c" data-role="footer" data-position="fixed"></div>
+        
+        </div>		
+
+
+
+<!--===========================dialog market info start=============-->
+       
+<div data-theme="c" data-role="page" data-dialog="true" data-transition="slidedown" id="dialogFerryRecDetails">
+  <div data-role="header">
+    <h1>Details Info</h1>
+  </div>
+  <div data-role="main" class="ui-content">
+  
+  <div id="error_dialog" style="color:#C00"></div>    
+  	 <table id="tbl_dialog_show_all"  border="0" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999">
+     	<tr >
+          <td style="width:40%;" >SL No</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_sl_no" ></td>
+        </tr>
+        <tr>
+          <td style="width:40%;" >Plate No</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_palat_no" ></td>
+        </tr>
+        <tr>
+          <td style="width:40%;" >Driver Name</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_dr_name" ></td>
+        </tr>
+        <tr>
+          <td style="width:40%;" >Driver Mobile</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_dr_mobile_no" ></td>       
+        </tr> 
+        <tr>
+          <td style="width:40%;" >Transporter/ Customer</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_tr_cus" ></td>       
+        </tr> 
+        <tr>
+          <td style="width:40%;" >Transporter/ Customer Name</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_tr_cus_name" ></td>       
+        </tr> 
+        <tr>
+          <td style="width:40%;" >Capacity</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_cap" ></td>       
+        </tr> 
+        <tr>
+          <td style="width:40%;" >Party</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_party" ></td>       
+        </tr>
+        <tr>
+          <td style="width:40%;" >Token No</td>
+          <td style="width:1%;" >:</td>
+          <td style="width:60%;" id="ds_token" ></td>       
+        </tr>        
+     </table>
+  	
+    <button class="button" onClick="printSlip();">Print Slip</button>
+	<br/>
+    <br/>
+    <a data-role="button" data-rel="back" >Close</a>
+  
+    <br/><br/><br/><br/><br/><br/>
+  </div>
+
+
+
+
+
+     
+
+    <script type="text/javascript" src="phonegap.js"></script>
+    
+    
+    </body>
+</html>
