@@ -373,7 +373,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
+	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
 	//ft.upload(imageURI, encodeURI("http://127.0.0.1:8000/quem/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
 	
 }
@@ -388,21 +388,11 @@ function winTruckInfo(r) {
 	syncDataTruckInfo();
 }
 
+function onfail(r) {
+	$("#err_truck_info").text('File upload Failed. Syncing Data...');
+	syncDataTruckInfo();
+}
 
-
-
-/*function toFerryPage(){
-		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
-			$(".errorChk").text("Required Sync");
-		}else{
-			$("#wait_image_task_submit").hide();
-			
-			var url = "#page_to_ferry_show";
-			$.mobile.navigate(url);
-		}
-	
-	
-	}*/
 
 
 //------------------------parking
