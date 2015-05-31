@@ -64,6 +64,18 @@ var tokenNo="";
 var imageName = "";
 var imagePathA="";
 
+$(document).ready(function(){	
+	$("#wait_image_login").hide();
+	$("#wait_image_parking_list").hide();
+	$("#wait_image_to_ferry_list").hide();
+	$("#wait_image_on_ferry_list").hide();
+	
+	$("#wait_image_search").hide();
+	$('#tbl_show_all').hide();
+	
+	$("#wait_image_to_submit").hide();
+	
+	});
 
 // -------------- If Not synced, Show login
 function first_page(){
@@ -113,8 +125,7 @@ function check_user() {
 								
 							}else{
 								syncResult=result
-								//alert(syncResult);
-								
+																
 								var syncResultArray = syncResult.split('rdrd');
 								if (syncResultArray[0]=='YES'){													
 									localStorage.synced=syncResultArray[0];														
@@ -131,13 +142,9 @@ function check_user() {
 									
 									var url = "#pageHome";
 									$.mobile.navigate(url);								
-									location.reload();
-									
 									
 									$(".errorChk").html("Sync Successful");
 									//alert('aa');
-									
-								
 			
 								}else {
 									
@@ -148,9 +155,7 @@ function check_user() {
 									$("#error_login").html("Sync Failed. Authorization or Network Error.");
 									//$('#syncBasic').show();
 								}
-								
-								
-															
+													
 								
 							}
 						  },
@@ -272,7 +277,7 @@ function truckInfoSubmit(){
 								}
 							
 							//imagePathA="test"
-							if (imagePathA!=""){
+							if (imagePathA!=""){								
 								$("#err_truck_info").text("Syncing photo..");
 								imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
 												
@@ -330,15 +335,15 @@ function syncDataTruckInfo(){
 
 
 //Truck Info
-function getTruckPalateImage() {	
+function getTruckPalateImage() {		
 	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 10,
-		destinationType: Camera.DestinationType.FILE_URI });
+	destinationType: Camera.DestinationType.FILE_URI });		
 }
 
-function onSuccessA(imageURI) {
+function onSuccessA(imageURI) {		
     var image = document.getElementById('myImageA');
     image.src = imageURI;
-	imagePathA = imageURI;
+	imagePathA = imageURI;	
 	$("#platePhoto").val(imagePathA);
 	
 }
@@ -351,7 +356,8 @@ function onFailA(message) {
 
 //------------------------------------------------------------------------------
 //File upload 
-function uploadPhotoTruckPlate(imageURI, imageName) {	
+function uploadPhotoTruckPlate(imageURI, imageName) {
+	
 	//winTruckInfo();
     var options = new FileUploadOptions();
     options.fileKey="upload";
@@ -368,7 +374,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
-	//ft.upload(imageURI, encodeURI("http://127.0.0.1:8000/welcome/wab_sync/fileUploader/"),winAch,fail,options);
+	//ft.upload(imageURI, encodeURI("http://127.0.0.1:8000/quem/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
 	
 }
 
@@ -666,6 +672,10 @@ function searchAllList(){
 	}
 	
 
+//---------------------- Exit Application
+function exit() {	
+	navigator.app.exitApp();
+}
 
 
 
