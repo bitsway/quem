@@ -72,6 +72,7 @@ $(document).ready(function(){
 	
 	$("#wait_image_search").hide();
 	$('#tbl_show_all').hide();
+	$("#trans_depot").hide();
 	
 	$("#wait_image_to_submit").hide();
 	
@@ -252,11 +253,13 @@ function truckInfoSubmit(){
 		
 		if (platePhoto=='' || platePhoto==undefined){
 			$("#err_truck_info").text("Please confirm Photo ");
+			$("#wait_image_to_submit").hide();
 			$("#btnTruckInfo").show();
 		}else{
 			if (plateNo=="" || plateNo==undefined || transOrCus=="" || transOrCus==undefined || trnCusName=="" || trnCusName==undefined || drMsName=="" || drMsName==undefined || drMobileNo=="" || drMobileNo==undefined || numOfBag=="" || numOfBag==undefined || party=="" || party==undefined){
 				
 				$("#err_truck_info").text("Required field ");
+				$("#wait_image_to_submit").hide();
 				$("#btnTruckInfo").show();
 				}else{						
 				/*if(latitude==0 || longitude==0){
@@ -270,6 +273,8 @@ function truckInfoSubmit(){
 						
 						if (drMobileNo.length<11 || drMobileNo.length>13){
 							$("#err_truck_info").text("Invalid Mobile no");
+							$("#wait_image_to_submit").hide();
+							$("#btnTruckInfo").show();
 						}else{
 							
 							if (drMobileNo.length==11){
@@ -313,6 +318,7 @@ function syncDataTruckInfo(){
 							$("#tokenNo").val("");
 														
 							$("#success_msg").text('Successfully Submitted');
+							$("#wait_image_to_submit").hide();
 							$("#btnTruckInfo").hide();
 							$("#btn_take_pic").hide();
 							
@@ -323,7 +329,8 @@ function syncDataTruckInfo(){
 													
 						}else{
 							$("#err_truck_info").text('Unauthorized Access');
-							//$(".errorChk").text('Try again after 5 minutes');																		
+							//$(".errorChk").text('Try again after 5 minutes');
+							$("#btn_take_pic").show();																		
 							$("#btnTruckInfo").show();
 							}
 							
