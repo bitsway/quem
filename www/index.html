@@ -26,6 +26,9 @@
     </script>
 	<style>
 	table.tbl_preview tr td { border:1px solid #5FAFAF; background-color:#EFF8F8;}
+	.ui-radio{ width:50%;}
+	.ui-controlgroup-controls{ width:100%;}
+	.ui-controlgroup-vertical{ width:200%;}
 	
 	</style>
 	</head>
@@ -59,32 +62,27 @@
                 <a  data-role="button" onClick="exit();" class="ui-btn-right" style="padding:4px;"><img src="exit.png" style="height:25px; width:25px;"></a>
                 
                 <!--<a data-role="button" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-right ui-icon-power ui-btn-icon-notext " onClick="exit();"><img src="exit.png"></a>-->
-                <h3>Que Management</h3>
+                <h3>Queue Management</h3>
             </div>
-            
-			<img style="width:100%; height:100px"  src="images_2.jpg">
-            <div data-role="content">
-				
-				<div id="myerror" style="color:#C00;">				
-				</div>
-                
+			<img style="width:100%; height:40px"  src="images_2.jpg">
+            <div data-role="content">                
                 <div data-role="fieldcontain" style="font-size:16px;">
                 	<div class="ui-grid-a" style="text-align:center;">
-							<a data-role="button" onClick="newEntry();" ><!--<img src="NewTruck.png">-->New Truck Entry</a> 
+							<a data-role="button" onClick="newEntry();" style="font-size:22px; color:#008040"><!--<img src="NewTruck.png">-->New Truck Entry</a> 
 					</div>
                     <div class="ui-grid-a" style="text-align:center;">
-							<a data-role="button" onClick="parkingListPage();" ><!--<img src="QueList.png">-->Parking</a>
+							<a data-role="button" id="btnParking1" onClick="parking1ListPage();" style="font-size:16px; color:#008040"><!--<img src="QueList.png">-->Parking 1</a>
 					</div>
                     
 					<div class="ui-grid-a" style="text-align:center;">
-							<a data-role="button" onClick="toFerryListPage();" ><!--<img src="QueList.png">-->Que</a>
+							<a data-role="button" id="btnQueue" onClick="queueListPage();" style="font-size:22px; color:#008040"><!--<img src="QueList.png">-->Queue</a>
 					</div>
                     
 					<div class="ui-grid-a" style="text-align:center;">
-                            <a data-role="button"  onClick="onFerryListPage();"><!--<img src="all_list.png">-->Parking 2</a>
+                            <a data-role="button" id="btnParking2"  onClick="parking2ListPage();" style="font-size:16px; color:#008040"><!--<img src="all_list.png">-->Parking 2</a>
 					</div>
                     <div class="ui-grid-a" style="text-align:center;">
-                            <a data-role="button"  onClick="searchListPage();"><!--<img src="all_list.png">-->Search</a>
+                            <a data-role="button"  onClick="searchListPage();" style="font-size:16px; color:#008040"><!--<img src="all_list.png">-->Search</a>
 					</div>
                                    
                 </div>
@@ -157,7 +155,7 @@
     </ul>-->
     
     <ul data-role="listview" data-inset="true" data-theme="c" >
-        <li class="ui-field-contain" style="background-color:#CCC; font-weight:bold;">Palate No:<font color="#C40000" style="font-size:20px">*</font></li>
+        <li class="ui-field-contain" style="background-color:#CCC; font-weight:bold;">Plate No:<font color="#C40000" style="font-size:20px">*</font></li>
         <li class="ui-field-contain">
             <input name="plateNo" id="plateNo" placeholder="" value="" type="text" maxlength="20" style="font-size:200%; font-weight:bold; text-align:center;" >
         </li>
@@ -198,8 +196,9 @@
                 <label for="tr_st">ST</label>
             </fieldset>
         </td></tr>
-         <tr id="trans_depot"><td width="30%" class="prof_label">Depot ID<font color="#C40000" style="font-size:20px">*</font></td><td>
-        <input name="tr_depot_id" id="tr_depot_id" placeholder="" value="" type="text" maxlength="20" >
+         <tr id="trans_depot"><td width="30%" class="prof_label">Depot <font color="#C40000" style="font-size:20px">*</font></td><td>
+         <div id="depotCmboDiv"></div>
+         
         </td></tr>
         <tr><td width="30%" class="prof_label">Token</td><td>
         <input name="tokenNo" id="tokenNo" placeholder="" value="" type="text" maxlength="20" >
@@ -248,7 +247,7 @@
     </div>
     
     <div data-role="content">
-        <div id="success_msg" style="color:#C00; text-align:center;"></div>	
+        <div id="success_msg" style="color:#060; text-align:center;"></div>	
         
         <br/>
         <br/>
@@ -268,17 +267,17 @@
 
 <!-- ===================== parking Page================== -->
 
-<div data-theme="c" data-role="page" id="page_parking_show">
+<div data-theme="c" data-role="page" id="page_parking_1_show">
     <div data-theme="c" data-role="header" data-position="fixed">
     <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
-        <h3>Parking</h3>
+        <h3>Parking 1</h3>
     </div>
     
     <div data-role="content">
-        <div id="error_to_ferry_list" style="color:#C00"></div>	
+        <div id="error_parking_1_list" style="color:#C00"></div>	
         
-        <a data-role="button" onClick="parkingListPage();">Refresh</a>
+        <a data-role="button" onClick="parking1ListPage();">Refresh</a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
@@ -289,9 +288,9 @@ Driver Mobile</strong></td>
             </tr>  
         
         </table>
-        <table id="tbl_show_parking"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <table id="tbl_show_parking_1"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
         <br>
-        <div align="center"><img id="wait_image_parking_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        <div align="center"><img id="wait_image_parking_1_list" style="" width="50px;" src="loading.gif" alt=""></div>
         
     </div><!--/cont-->
     
@@ -299,19 +298,19 @@ Driver Mobile</strong></td>
  </div><!--/page-->
 
 
-<!-- ===================== To ferry Page================== -->
+<!-- =====================Queue Page================== -->
 
-<div data-theme="c" data-role="page" id="page_to_ferry_show">
+<div data-theme="c" data-role="page" id="page_to_queue_show">
     <div data-theme="c" data-role="header" data-position="fixed">
     <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
-        <h3>Que</h3>
+        <h3>Queue</h3>
     </div>
     
     <div data-role="content">
-        <div id="error_to_ferry_list" style="color:#C00"></div>	
+        <div id="error_to_queue_list" style="color:#C00"></div>	
         
-        <a data-role="button" onClick="toFerryListPage();">Refresh</a>
+        <a data-role="button" onClick="queueListPage();">Refresh</a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
@@ -320,9 +319,9 @@ Plate No</strong></td>
               <td style="width:50%;" ><strong>Driver Name<br>
 Driver Mobile</strong></td>              
             </tr></table>
-        <table id="tbl_show_to_ferry"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <table id="tbl_show_to_queue"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
         <br>
-        <div align="center"><img id="wait_image_to_ferry_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        <div align="center"><img id="wait_image_to_queue_list" style="" width="50px;" src="loading.gif" alt=""></div>
         
     </div><!--/cont-->
     
@@ -330,9 +329,9 @@ Driver Mobile</strong></td>
  </div><!--/page-->
 
 
-<!-- ===================== On ferry Page================== -->
+<!-- ===================== Parking 2 Page================== -->
 
-<div data-theme="c" data-role="page" id="page_on_ferry_show">
+<div data-theme="c" data-role="page" id="page_parking_2_show">
     <div data-theme="c" data-role="header" data-position="fixed">
     <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
@@ -340,9 +339,9 @@ Driver Mobile</strong></td>
     </div>
     
     <div data-role="content">
-        <div id="error_on_ferry_list" style="color:#C00"></div>	
+        <div id="error_parking_2_list" style="color:#C00"></div>	
         
-        <a data-role="button" onClick="onFerryListPage();">Refresh</a>
+        <a data-role="button" onClick="parking2ListPage();">Refresh</a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
@@ -351,9 +350,9 @@ Plate No</strong></td>
               <td style="width:50%;" ><strong>Driver Name<br>
 Driver Mobile</strong></td>              
             </tr></table>
-        <table id="tbl_show_on_ferry"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
+        <table id="tbl_show_parking_2"  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999"></table>
         <br>
-        <div align="center"><img id="wait_image_on_ferry_list" style="" width="50px;" src="loading.gif" alt=""></div>
+        <div align="center"><img id="wait_image_parking_2_list" style="" width="50px;" src="loading.gif" alt=""></div>
         
     </div><!--/cont-->
     
@@ -441,74 +440,72 @@ Driver Mobile</strong></td>
 
 
 
-<!--===========================dialog market info start=============-->
+<!--===========================dialog info start=============-->
        
-<div data-theme="c" data-role="page" data-dialog="true" data-transition="slidedown" id="dialogFerryRecDetails">
-  <div data-role="header">
-    <h1>Details Info</h1>
-  </div>
+<div data-theme="c" data-role="page" data-transition="slidedown" id="dialogRecDetails">
+	<div data-theme="c" data-role="header" data-position="fixed">				
+        <a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+        <h3>Details Information</h3>
+    </div>
+  
   <div data-role="main" class="ui-content">
   
   <div id="error_dialog" style="color:#C00"></div>    
-  	 <table id="tbl_dialog_show_all"  border="0" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999">
+  	 <table id="tbl_dialog_show_all"  border="0" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; font-size:12px;">
      	<tr >
-          <td style="width:40%;" >SL No</td>
+          <td style="width:30%;" >SL No</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_sl_no" ></td>
         </tr>
         <tr>
-          <td style="width:40%;" >Plate No</td>
+          <td style="width:30%;" >Plate No</td>
           <td style="width:1%;" >:</td>
-          <td style="width:60%;" id="ds_palat_no" ></td>
+          <td style="width:60%; font-size:17px; color:#00A854" id="ds_palat_no" ></td>
         </tr>
         <tr>
-          <td style="width:40%;" >Driver Name</td>
+          <td style="width:30%;" >Driver Name</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_dr_name" ></td>
         </tr>
         <tr>
-          <td style="width:40%;" >Driver Mobile</td>
+          <td style="width:30%;" >Driver Mobile</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_dr_mobile_no" ></td>       
         </tr> 
         <tr>
-          <td style="width:40%;" >Transporter/ Customer</td>
+          <td style="width:30%;" >Transporter/ Customer</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_tr_cus" ></td>       
         </tr> 
         <tr>
-          <td style="width:40%;" >Transporter/ Customer Name</td>
+          <td style="width:30%;" >Transporter/ Cust. Name</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_tr_cus_name" ></td>       
         </tr> 
         <tr>
-          <td style="width:40%;" >Capacity</td>
+          <td style="width:30%;" >Capacity</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_cap" ></td>       
         </tr> 
         <tr>
-          <td style="width:40%;" >Party</td>
+          <td style="width:30%;" >Party</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_party" ></td>       
         </tr>
         <tr>
-          <td style="width:40%;" >Token No</td>
+          <td style="width:30%;" >Token No</td>
           <td style="width:1%;" >:</td>
           <td style="width:60%;" id="ds_token" ></td>       
         </tr>        
      </table>
   	
-    <button class="button" onClick="printSlip();">Print Slip</button>
+    <button class="button" onClick="printSlip();" id="btn_token">Issue Token</button>
 	<br/>
-    <br/>
+   
     <a data-role="button" data-rel="back" >Close</a>
   
-    <br/><br/><br/><br/><br/><br/>
+    <br/><br/>
   </div>
-
-
-
-
 
      
 

@@ -6,46 +6,6 @@ var apipath="http://e2.businesssolutionapps.com/quem/syncmobile/";
 //var apipath="http://127.0.0.1:8000/quem/syncmobile/";
 
 
-//var mobile_off_flag=0;
-
-//-------GET GEO LOCATION
-/*function getLocationInfo() { //location
-	navigator.geolocation.getCurrentPosition(onSuccess, onError);
-}*/
-
-// onSuccess Geolocation
-/*function onSuccess(position) {
-	$("#lat").val(position.coords.latitude);
-	$("#long").val(position.coords.longitude);
-	
-	$("#lat_p").val(position.coords.latitude);
-	$("#long_p").val(position.coords.longitude);
-	
-	$("#lat_complain").val(position.coords.latitude);
-	$("#long_complain").val(position.coords.longitude);
-	
-	$("#checkLocation").html('Location Confirmed');
-	$("#checkLocationProfileUpdate").html('Location Confirmed');
-	$("#checkLocationComplain").html('Location Confirmed');	
-}
-*/
-/*function onError(error) {
-	$("#lat").val(0);
-	$("#long").val(0);
-	
-	$("#lat_p").val(0);
-	$("#long_p").val(0);
-	
-	$("#lat_complain").val(0);
-	$("#long_complain").val(0);
-	
-	$("#checkLocation").html('Location not found');
-	$("#checkLocationProfileUpdate").html('Location not found');
-	$("#checkLocationComplain").html('Location not found');
-	
-	}*/
-
-
 var plateNo="";	
 		
 var platePhoto="";
@@ -59,22 +19,39 @@ var drMobileNo="";
 var numOfBag="";
 var party="";
 var tokenNo="";
-
+var trans_depot_id="";
 
 var imageName = "";
 var imagePathA="";
 
+var deptCmboFlag=0;
+
 $(document).ready(function(){	
 	$("#wait_image_login").hide();
-	$("#wait_image_parking_list").hide();
-	$("#wait_image_to_ferry_list").hide();
-	$("#wait_image_on_ferry_list").hide();
+	$("#wait_image_parking_1_list").hide();
+	$("#wait_image_to_queue_list").hide();
+	$("#wait_image_parking_2_list").hide();
 	
 	$("#wait_image_search").hide();
 	$('#tbl_show_all').hide();
 	$("#trans_depot").hide();
 	
 	$("#wait_image_to_submit").hide();
+	
+	if (deptCmboFlag==0){
+		$("#depotCmboDiv").html(localStorage.depotList);	
+		deptCmboFlag=1;
+	}else{
+		$('#depotCmboDiv').empty();
+		$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+	}
+	
+	if (localStorage.outerPark=="NO"){
+		$("#btnParking1").hide();
+		$("#btnQueue").hide();
+		$("#btnParking2").hide();
+		}
+		
 	
 	});
 
@@ -113,11 +90,11 @@ function check_user() {
 				localStorage.sync_code=0
 			}
 			
-			//alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURI(user_pass)+'&sync_code='+localStorage.sync_code);
+			//alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code);
 										
 			$.ajax({
 					 type: 'POST',
-					 url: apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURI(user_pass)+'&sync_code='+localStorage.sync_code,
+					 url: apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code,
 					 success: function(result) {											
 							if (result==''){
 								$("#wait_image_login").hide();
@@ -131,9 +108,30 @@ function check_user() {
 								if (syncResultArray[0]=='YES'){													
 									localStorage.synced=syncResultArray[0];														
 									localStorage.sync_code=syncResultArray[1];
+									localStorage.depotList=syncResultArray[2];
+									localStorage.outerPark=syncResultArray[3];
 															
 									localStorage.mobile_no=user_id;
 									
+									if (deptCmboFlag==0){
+										$("#depotCmboDiv").html(localStorage.depotList);	
+										deptCmboFlag=1;
+									}else{
+										$('#depotCmboDiv').empty();
+										$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+									}
+									
+									if (localStorage.outerPark=="NO"){
+										$("#btnParking1").hide();
+										$("#btnQueue").hide();
+										$("#btnParking2").hide();
+									}else{
+										$("#btnParking1").show();
+										$("#btnQueue").show();
+										$("#btnParking2").show();
+										}
+									
+									$("#depotCmboDiv").html(localStorage.depotList);
 									
 									$("#error_login").html('');
 									$("#wait_image_login").hide();
@@ -182,6 +180,14 @@ function newEntry(){
 	$("#success_msg").text("");
 	$("#wait_image_to_submit").hide();
 	
+	if (deptCmboFlag==0){
+		$("#depotCmboDiv").html(localStorage.depotList);	
+		deptCmboFlag=1;
+	}else{
+		$('#depotCmboDiv').empty();
+		$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+	}
+	
 	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 		$(".errorChk").text("Required Sync");
 	}else{
@@ -210,8 +216,21 @@ function chkParty(){
 	party=$("input[name='party']:checked").val();	
 	if (party=="ST"){
 		$("#trans_depot").show();
+		
+		if (deptCmboFlag==0){
+			$("#depotCmboDiv").html(localStorage.depotList);	
+			deptCmboFlag=1;
+		}else{
+			$('#depotCmboDiv').empty();
+			$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+		}
+		
+		
+		
 	}else{
+		$('#depotCmboDiv').empty();
 		$("#trans_depot").hide();
+		
 		}
 	
 	}
@@ -238,6 +257,14 @@ function truckInfoSubmit(){
 		numOfBag=$("#numOfBag").val();
 		party=$("input[name='party']:checked").val();
 		tokenNo=$("#tokenNo").val();
+		trans_depot_id=$("#tr_depot_id").val();
+		
+		
+		if(party=="ST"){
+			trans_depot_id=trans_depot_id;
+		}else{
+			trans_depot_id="-";
+		}
 		
 		//latitude=$("#ach_lat").val();
 		//longitude=$("#ach_long").val();
@@ -275,18 +302,23 @@ function truckInfoSubmit(){
 							$("#err_truck_info").text("Invalid Mobile no");
 							$("#wait_image_to_submit").hide();
 							$("#btnTruckInfo").show();
-						}else{
-							
+						}else{							
 							if (drMobileNo.length==11){
 								drMobileNo='88'+drMobileNo
 								}
 							
-							//imagePathA="test"
-							if (imagePathA!=""){								
-								$("#err_truck_info").text("Syncing photo..");
-								imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
-												
-								uploadPhotoTruckPlate(imagePathA, imageName);
+							if((party=="ST")&&(trans_depot_id=="")){
+								$("#err_truck_info").text("Check Stock Transfer Depot.");
+								$("#wait_image_to_submit").hide();
+								$("#btnTruckInfo").show();
+							}else{							
+								//imagePathA="test"
+								if (imagePathA!=""){								
+									$("#err_truck_info").text("Syncing photo..");
+									imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
+													
+									uploadPhotoTruckPlate(imagePathA, imageName);
+								}
 							}
 						}
 					}
@@ -297,11 +329,11 @@ function truckInfoSubmit(){
 
 function syncDataTruckInfo(){	
 			
-			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+plateNo+'&transOrCus='+transOrCus+'&trnCusName='+trnCusName+'&drMsName='+drMsName+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName);
+			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id);
 			
 			$.ajax({
 					type: 'POST',
-					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+plateNo+'&transOrCus='+transOrCus+'&trnCusName='+trnCusName+'&drMsName='+drMsName+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName,
+					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+encodeURIComponent(tokenNo)+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id,
 					   
 					   success: function(result) {
 							//alert(result);
@@ -366,11 +398,10 @@ function onFailA(message) {
 function uploadPhotoTruckPlate(imageURI, imageName) {
 	
 	//winTruckInfo();
-    var options = new FileUploadOptions();
+	
+	var options = new FileUploadOptions();
     options.fileKey="upload";
-//    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
     options.fileName=imageName;
-//	options.fileName = options.fileName
     options.mimeType="image/jpeg";
 
     var params = {};
@@ -381,7 +412,6 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
 
     var ft = new FileTransfer();
 	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
-	//ft.upload(imageURI, encodeURI("http://127.0.0.1:8000/quem/quem_image_sync/fileUploader/"),winTruckInfo,fail,options);
 	
 }
 
@@ -404,31 +434,31 @@ function onfail(r) {
 
 //------------------------parking
 
-function parkingListPage(){
-	$('#tbl_show_parking').empty();
+function parking1ListPage(){
+	$('#tbl_show_parking_1').empty();
 	
-	//alert(apipath+'get_parking_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
+	//alert(apipath+'get_parking_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
 	
-		$("#wait_image_parking_list").show();
+		$("#wait_image_parking_1_list").show();
 			
 		$.ajax({
-				url:apipath+'get_parking_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
+				url:apipath+'get_parking_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
 			  success: function(result) {						
-						pr_list=result;
+						pr_1_list=result;
 						
-						if (pr_list!=""){
-							pr_list_array=pr_list.split("rdrd");					
+						if (pr_1_list!=""){
+							pr_1_list_array=pr_1_list.split("rdrd");					
 							
-								for(i=0;i<pr_list_array.length;i++){
-									pr_arrayStr=pr_list_array[i];
+								for(i=0;i<pr_1_list_array.length;i++){
+									pr_1_arrayStr=pr_1_list_array[i];
 									
-									pr_array=pr_arrayStr.split("fdfd");
+									pr_1_array=pr_1_arrayStr.split("fdfd");
 									
-									$('#tbl_show_parking').append('<tr onClick="recParkingDetails(\''+pr_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+pr_array[0]+'<br/><strong>'+pr_array[1]+'</strong></td><td style="width:50%;">'+pr_array[2]+'<br/>'+pr_array[3]+'</td></tr>');
+									$('#tbl_show_parking_1').append('<tr onClick="recParking1Details(\''+pr_1_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+pr_1_array[0]+'<br/><strong>'+pr_1_array[1]+'</strong></td><td style="width:50%;">'+pr_1_array[2]+'<br/>'+pr_1_array[3]+'</td></tr>');
 								
 								}
-							$("#wait_image_parking_list").hide();
-							$('#error_parking_list').text("");
+							$("#wait_image_parking_1_list").hide();
+							$('#error_parking_1_list').text("");
 							
 						}
 					
@@ -436,28 +466,30 @@ function parkingListPage(){
 			});	
 
 	
-	$("#wait_image_parking_list").hide();
-	var url = "#page_parking_show";
+	$("#wait_image_parking_1_list").hide();
+	var url = "#page_parking_1_show";
 	$.mobile.navigate(url);
 	
 }
 
 
-function recParkingDetails(recFerryStr){
-			
-		fr_array=recFerryStr.split("fdfd");		
-		$('#ds_sl_no').text(fr_array[0]);
-		$('#ds_palat_no').text(fr_array[1]);
-		$('#ds_dr_name').text(fr_array[2]);
-		$('#ds_dr_mobile_no').text(fr_array[3]);
+function recParking1Details(recParking1Str){
 		
-		$('#ds_tr_cus').text(fr_array[4]);
-		$('#ds_tr_cus_name').text(fr_array[5]);
-		$('#ds_cap').text(fr_array[6]);
-		$('#ds_party').text(fr_array[7]);
-		$('#ds_token').text(fr_array[8]);	
+		$("#btn_token").hide();
 		
-		var url = "#dialogFerryRecDetails";
+		park_1_array=recParking1Str.split("fdfd");		
+		$('#ds_sl_no').text(park_1_array[0]);
+		$('#ds_palat_no').text(park_1_array[1]);
+		$('#ds_dr_name').text(park_1_array[2]);
+		$('#ds_dr_mobile_no').text(park_1_array[3]);
+		
+		$('#ds_tr_cus').text(park_1_array[4]);
+		$('#ds_tr_cus_name').text(park_1_array[5]);
+		$('#ds_cap').text(park_1_array[6]);
+		$('#ds_party').text(park_1_array[7]);
+		$('#ds_token').text(park_1_array[8]);	
+		
+		var url = "#dialogRecDetails";
 		$.mobile.navigate(url);
 		
 	}	
@@ -465,30 +497,30 @@ function recParkingDetails(recFerryStr){
 //--------------------- /parking
 
 
-function toFerryListPage(){
-	$('#tbl_show_to_ferry').empty();
+function queueListPage(){
+	$('#tbl_show_to_queue').empty();
 	
-	//alert(apipath+'get_to_ferry_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
+	//alert(apipath+'get_queue_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
 	
-		$("#wait_image_to_ferry_list").show();
+		$("#wait_image_to_queue_list").show();
 			
 		$.ajax({
-				url:apipath+'get_to_ferry_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
+				url:apipath+'get_queue_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
 			  success: function(result) {					
-						fr_list=result;						
-						if (fr_list!=""){
-							fr_list_array=fr_list.split("rdrd");					
+						que_list=result;						
+						if (que_list!=""){
+							que_list_array=que_list.split("rdrd");					
 							
-								for(i=0;i<fr_list_array.length;i++){
-									fr_arrayStr=fr_list_array[i];
+								for(i=0;i<que_list_array.length;i++){
+									que_arrayStr=que_list_array[i];
 									
-									fr_array=fr_arrayStr.split("fdfd");
+									que_array=que_arrayStr.split("fdfd");
 									
-									$('#tbl_show_to_ferry').append('<tr onClick="recToFerryDetails(\''+fr_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+fr_array[0]+'<br/><strong>'+fr_array[1]+'</strong></td><td style="width:50%;">'+fr_array[2]+'<br/>'+fr_array[3]+'</td></tr>');
+									$('#tbl_show_to_queue').append('<tr onClick="recQueueDetails(\''+que_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+que_array[0]+'<br/><strong>'+que_array[1]+'</strong></td><td style="width:50%;">'+que_array[2]+'<br/>'+que_array[3]+'</td></tr>');
 								
 								}
-							$("#wait_image_to_ferry_list").hide();
-							$('#error_to_ferry_list').text("");
+							$("#wait_image_to_queue_list").hide();
+							$('#error_to_queue_list').text("");
 							
 						}
 					
@@ -496,48 +528,45 @@ function toFerryListPage(){
 			});	
 
 	
-	$("#wait_image_to_ferry_list").hide();
-	var url = "#page_to_ferry_show";
+	$("#wait_image_to_queue_list").hide();
+	var url = "#page_to_queue_show";
 	$.mobile.navigate(url);
 	
 }
 
-function recToFerryDetails(recStr){	
-			
-		fr_array=recStr.split("fdfd");		
-		$('#ds_sl_no').text(fr_array[0]);
-		$('#ds_palat_no').text(fr_array[1]);
-		$('#ds_dr_name').text(fr_array[2]);
-		$('#ds_dr_mobile_no').text(fr_array[3]);
+function recQueueDetails(que_arrayStr){	
+		$("#btn_token").show();
+		que_array=que_arrayStr.split("fdfd");		
+		$('#ds_sl_no').text(que_array[0]);
+		$('#ds_palat_no').text(que_array[1]);
+		$('#ds_dr_name').text(que_array[2]);
+		$('#ds_dr_mobile_no').text(que_array[3]);
 		
-		$('#ds_tr_cus').text(fr_array[4]);
-		$('#ds_tr_cus_name').text(fr_array[5]);
-		$('#ds_cap').text(fr_array[6]);
-		$('#ds_party').text(fr_array[7]);
-		$('#ds_token').text(fr_array[8]);	
+		$('#ds_tr_cus').text(que_array[4]);
+		$('#ds_tr_cus_name').text(que_array[5]);
+		$('#ds_cap').text(que_array[6]);
+		$('#ds_party').text(que_array[7]);
+		$('#ds_token').text(que_array[8]);	
 		
-		var url = "#dialogFerryRecDetails";
-		$.mobile.navigate(url);
-		
+		var url = "#dialogRecDetails";
+		$.mobile.navigate(url);		
 	}	
 
 
 
-function printSlip(){		
-		var sl_no=$('#ds_sl_no').text();			
-		
+function printSlip(){
+		var sl_no=$('#ds_sl_no').text();		
 		//alert(apipath+'get_slip?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&sl_no='+sl_no);
 				
 		$.ajax({
 				url:apipath+'get_slip?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&sl_no='+sl_no,
 			  success: function(result) {
 				  if(result=='Success'){				  		
-					print();					
+					//print();					
 					location.reload();
 				  }
 				}
 			});	
-		
 		
 	}	
 
@@ -546,31 +575,31 @@ function printSlip(){
 
 //------------------------on Ferry
 
-function onFerryListPage(){
-	$('#tbl_show_on_ferry').empty();
+function parking2ListPage(){
+	$('#tbl_show_parking_2').empty();
 	
-	//alert(apipath+'get_on_ferry_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
+	//alert(apipath+'get_parking_2_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code); 
 	
-		$("#wait_image_on_ferry_list").show();
+		$("#wait_image_parking_2_list").show();
 			
 		$.ajax({
-				url:apipath+'get_on_ferry_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
+				url:apipath+'get_parking_2_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
 			  success: function(result) {						
-						on_fr_list=result;
+						pr_2_list=result;
 						
-						if (on_fr_list!=""){
-							on_fr_list_array=on_fr_list.split("rdrd");					
+						if (pr_2_list!=""){
+							pr_2_list_array=pr_2_list.split("rdrd");					
 							
-								for(i=0;i<on_fr_list_array.length;i++){
-									on_fr_arrayStr=on_fr_list_array[i];
+								for(i=0;i<pr_2_list_array.length;i++){
+									pr_2_arrayStr=pr_2_list_array[i];
 									
-									on_fr_array=on_fr_arrayStr.split("fdfd");
+									pr_2_array=pr_2_arrayStr.split("fdfd");
 									
-									$('#tbl_show_on_ferry').append('<tr onClick="recOnFerryDetails(\''+on_fr_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+on_fr_array[0]+'<br/><strong>'+on_fr_array[1]+'</strong></td><td style="width:50%;">'+on_fr_array[2]+'<br/>'+on_fr_array[3]+'</td></tr>');
+									$('#tbl_show_parking_2').append('<tr onClick="recParking2Details(\''+pr_2_arrayStr+'\')" style="font-size:11px;"><td style="width:50%;" >'+pr_2_array[0]+'<br/><strong>'+pr_2_array[1]+'</strong></td><td style="width:50%;">'+pr_2_array[2]+'<br/>'+pr_2_array[3]+'</td></tr>');
 								
 								}
-							$("#wait_image_on_ferry_list").hide();
-							$('#error_on_ferry_list').text("");
+							$("#wait_image_pr_2_list").hide();
+							$('#error_pr_2_list').text("");
 							
 						}
 					
@@ -578,27 +607,28 @@ function onFerryListPage(){
 			});	
 
 	
-	$("#wait_image_on_ferry_list").hide();
-	var url = "#page_on_ferry_show";
+	$("#wait_image_parking_2_list").hide();
+	var url = "#page_parking_2_show";
 	$.mobile.navigate(url);
 	
 }
 
 
-function recOnFerryDetails(recFerryStr){		
-		fr_array=recFerryStr.split("fdfd");		
-		$('#ds_sl_no').text(fr_array[0]);
-		$('#ds_palat_no').text(fr_array[1]);
-		$('#ds_dr_name').text(fr_array[2]);
-		$('#ds_dr_mobile_no').text(fr_array[3]);
+function recParking2Details(pr_2_arrayStr){	
+		$("#btn_token").show();
+		pr2Array=pr_2_arrayStr.split("fdfd");		
+		$('#ds_sl_no').text(pr2Array[0]);
+		$('#ds_palat_no').text(pr2Array[1]);
+		$('#ds_dr_name').text(pr2Array[2]);
+		$('#ds_dr_mobile_no').text(pr2Array[3]);
 		
-		$('#ds_tr_cus').text(fr_array[4]);
-		$('#ds_tr_cus_name').text(fr_array[5]);
-		$('#ds_cap').text(fr_array[6]);
-		$('#ds_party').text(fr_array[7]);
-		$('#ds_token').text(fr_array[8]);	
+		$('#ds_tr_cus').text(pr2Array[4]);
+		$('#ds_tr_cus_name').text(pr2Array[5]);
+		$('#ds_cap').text(pr2Array[6]);
+		$('#ds_party').text(pr2Array[7]);
+		$('#ds_token').text(pr2Array[8]);	
 		
-		var url = "#dialogFerryRecDetails";
+		var url = "#dialogRecDetails";
 		$.mobile.navigate(url);
 		
 	}	
