@@ -6,10 +6,10 @@
         id        = "com.businesssolutionapps.quem"
         version   = "1.0.0">
 
-    <name>QueM</name>
+    <name>QueueM</name>
 
     <description>
-        QueM
+        QueueM
     </description>
 
     <author href="http://phonegap.com" email="sabbir456@gmail.com">
