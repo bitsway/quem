@@ -28,11 +28,17 @@ var deptCmboFlag=0;
 var transCus="";
 var party="";
 
-$(document).ready(function(){	
+
+function menuClick(){
+	$("#btn_take_pic").show();																		
+	$("#btnTruckInfo").show();
+							
 	$("#wait_image_login").hide();
 	$("#wait_image_parking_1_list").hide();
 	$("#wait_image_to_queue_list").hide();
 	$("#wait_image_parking_2_list").hide();
+	
+	
 	
 	$("#wait_image_search").hide();
 	$('#tbl_show_all').hide();
@@ -40,22 +46,22 @@ $(document).ready(function(){
 	
 	$("#wait_image_to_submit").hide();
 	
-	//---------------------------
+	
+	//------------------------------	
 	$("#plateNo").val("");
-		
-	transCus="";
-	$( "input:radio[name='transCus'][value='"+transCus+"']" ).attr('checked','');
+	$("#platePhoto").val("");		
+	$( "input:radio[name='transCus']" ).attr('checked','');
 	
 	$("#trnCusName").val("");
 	$("#drMsName").val("");
 	$("#mobileNo").val("");
 	$("#numOfBag").val("");
 	
-	party="";
-	$("input:radio[name='party'][value='"+party+"']" ).attr('checked','');
+	$("input:radio[name='party']" ).attr('checked','');
 	
 	$("#tokenNo").val("");
-	//----------------------------------
+	
+	$("#btn_take_pic").show();
 	
 	if (deptCmboFlag==0){
 		$("#depotCmboDiv").html(localStorage.depotList);	
@@ -70,16 +76,21 @@ $(document).ready(function(){
 		$("#btnQueue").hide();
 		$("#btnParking2").hide();
 		}
-		
 	
-	});
+	$.mobile.navigate("#pageHome");
+	//location.reload();
+	
+}
 
 // -------------- If Not synced, Show login
 function first_page(){
 	if ((localStorage.synced!='YES')){
 		var url = "#login";
 		$.mobile.navigate(url);		
-	}
+	}else{
+		menuClick();
+		}
+	
 }
 
 
@@ -159,16 +170,14 @@ function check_user() {
 									//-------------------
 									$("#plateNo").val("");
 		
-									transCus="";
-									$( "input:radio[name='transCus'][value='"+transCus+"']" ).attr('checked','');
+									$( "input:radio[name='transCus']" ).attr('checked','');
 									
 									$("#trnCusName").val("");
 									$("#drMsName").val("");
 									$("#mobileNo").val("");
 									$("#numOfBag").val("");
 									
-									party="";
-									$("input:radio[name='party'][value='"+party+"']" ).attr('checked','');
+									$("input:radio[name='party']" ).attr('checked','');
 									
 									$("#tokenNo").val("");
 									
@@ -216,6 +225,25 @@ function newEntry(){
 	$("#success_msg").text("");
 	$("#wait_image_to_submit").hide();
 	
+	$("#btnTruckInfo").show();
+		
+	$("#err_truck_info").text("");
+	
+	$("#plateNo").val("");
+	
+	$("#platePhoto").val("");
+	
+	$( "input:radio[name='transCus']" ).attr('checked','');
+	
+	$("#trnCusName").val("");
+	$("#drMsName").val("");
+	$("#mobileNo").val("");
+	$("#numOfBag").val("");
+	
+	$("input:radio[name='party']" ).attr('checked','');
+	
+	$("#tokenNo").val("");
+	
 	if (deptCmboFlag==0){
 		$("#depotCmboDiv").html(localStorage.depotList);	
 		deptCmboFlag=1;
@@ -228,26 +256,7 @@ function newEntry(){
 	
 	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 		$(".errorChk").text("Required Sync");
-	}else{
-		$("#btnTruckInfo").show();
-		
-		$("#err_truck_info").text("");
-		
-		$("#plateNo").val("");
-		
-		transCus="";
-		$( "input:radio[name='transCus'][value='"+transCus+"']" ).attr('checked','');
-		
-		$("#trnCusName").val("");
-		$("#drMsName").val("");
-		$("#mobileNo").val("");
-		$("#numOfBag").val("");
-		
-		party="";
-		$("input:radio[name='party'][value='"+party+"']" ).attr('checked','');
-		
-		$("#tokenNo").val("");
-		
+	}else{		
 		var url = "#newEntry";
 		$.mobile.navigate(url);
 		}
@@ -371,9 +380,8 @@ function truckInfoSubmit(){
 	}
 
 function syncDataTruckInfo(){	
-			
-			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id);
-			
+			$("#wait_image_to_submit").show();			
+		
 			$.ajax({
 					type: 'POST',
 					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+encodeURIComponent(tokenNo)+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id,
@@ -383,27 +391,22 @@ function syncDataTruckInfo(){
 						if(result=='Success'){							
 							//----------------
 							$("#plateNo").val("");
-							
-							transCus="";
-							$( "input:radio[name='transCus'][value='"+transCus+"']" ).attr('checked','');
+							$("#platePhoto").val("");
+							$( "input:radio[name='transCus']" ).attr('checked','');
 							
 							$("#trnCusName").val("");
 							$("#drMsName").val("");
 							$("#mobileNo").val("");
 							$("#numOfBag").val("");
 							
-							party="";
-							$("input:radio[name='party'][value='"+party+"']" ).attr('checked','');
+							
+							$("input:radio[name='party']" ).attr('checked','');
 							
 							$("#tokenNo").val("");
 														
 							$("#success_msg").text('Successfully Submitted');
 							$("#wait_image_to_submit").hide();
-							$("#btnTruckInfo").hide();
-							$("#btn_take_pic").hide();
-							
-							
-							
+														
 							var url="#successPage";
 							$.mobile.navigate(url);
 							
