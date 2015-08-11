@@ -25,71 +25,79 @@ var imageName = "";
 var imagePathA="";
 
 var deptCmboFlag=0;
-var transCus="";
-var party="";
+var transCusVal="";
+var partyVal="";
 
+
+$(document).ready(function(){
+		$("#wait_image_login").hide();
+		$("#loginButton").show();		
+		if ((localStorage.synced!='YES')){
+			var url = "#login";
+				
+		}else{		
+			$("#btn_take_pic").show();																		
+			$("#btnTruckInfo").show();
+									
+			$("#wait_image_login").hide();
+			$("#wait_image_parking_1_list").hide();
+			$("#wait_image_to_queue_list").hide();
+			$("#wait_image_parking_2_list").hide();
+			
+			
+			
+			$("#wait_image_search").hide();
+			$('#tbl_show_all').hide();
+			$("#trans_depot").hide();
+			
+			$("#wait_image_to_submit").hide();
+			
+			
+			//------------------------------	
+			$("#plateNo").val("");
+			$("#platePhoto").val("");
+			
+			transCusVal="";	
+			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+			
+			$("#trnCusName").val("");
+			$("#drMsName").val("");
+			$("#mobileNo").val("");
+			$("#numOfBag").val("");
+			
+			partyVal="";	
+			$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+			
+			
+			$("#tokenNo").val("");
+			
+			$("#btn_take_pic").show();
+			
+			if (deptCmboFlag==0){
+				$("#depotCmboDiv").html(localStorage.depotList);	
+				deptCmboFlag=1;
+			}else{
+				$('#depotCmboDiv').empty();
+				$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+			}
+			
+			if (localStorage.outerPark=="NO"){
+				$("#btnParking1").hide();
+				$("#btnQueue").hide();
+				$("#btnParking2").hide();
+				}
+			
+			var url = "#pageHome";
+		}
+		
+		$.mobile.navigate(url);
+		
+	});
 
 function menuClick(){
-	$("#btn_take_pic").show();																		
-	$("#btnTruckInfo").show();
-							
-	$("#wait_image_login").hide();
-	$("#wait_image_parking_1_list").hide();
-	$("#wait_image_to_queue_list").hide();
-	$("#wait_image_parking_2_list").hide();
-	
-	
-	
-	$("#wait_image_search").hide();
-	$('#tbl_show_all').hide();
-	$("#trans_depot").hide();
-	
-	$("#wait_image_to_submit").hide();
-	
-	
-	//------------------------------	
-	$("#plateNo").val("");
-	$("#platePhoto").val("");		
-	$( "input:radio[name='transCus']" ).attr('checked','');
-	
-	$("#trnCusName").val("");
-	$("#drMsName").val("");
-	$("#mobileNo").val("");
-	$("#numOfBag").val("");
-	
-	$("input:radio[name='party']" ).attr('checked','');
-	
-	$("#tokenNo").val("");
-	
-	$("#btn_take_pic").show();
-	
-	if (deptCmboFlag==0){
-		$("#depotCmboDiv").html(localStorage.depotList);	
-		deptCmboFlag=1;
-	}else{
-		$('#depotCmboDiv').empty();
-		$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
-	}
-	
-	if (localStorage.outerPark=="NO"){
-		$("#btnParking1").hide();
-		$("#btnQueue").hide();
-		$("#btnParking2").hide();
-		}
 	
 	$.mobile.navigate("#pageHome");
-	//location.reload();
-	
-}
-
-// -------------- If Not synced, Show login
-function first_page(){
-	if ((localStorage.synced!='YES')){
-		var url = "#login";
-		$.mobile.navigate(url);		
-	}else{
-		menuClick();
-		}
+	location.reload();
 	
 }
 
@@ -170,14 +178,16 @@ function check_user() {
 									//-------------------
 									$("#plateNo").val("");
 		
-									$( "input:radio[name='transCus']" ).attr('checked','');
+									transCusVal="";	
+									$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 									
 									$("#trnCusName").val("");
 									$("#drMsName").val("");
 									$("#mobileNo").val("");
 									$("#numOfBag").val("");
 									
-									$("input:radio[name='party']" ).attr('checked','');
+									partyVal="";	
+									$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
 									
 									$("#tokenNo").val("");
 									
@@ -221,45 +231,56 @@ function check_user() {
 
 
 function newEntry(){
-	$("#trans_depot").hide();
-	$("#success_msg").text("");
-	$("#wait_image_to_submit").hide();
-	
-	$("#btnTruckInfo").show();
+		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
+			$(".errorChk").text("Required Sync");
+		}else{	
+			$("#trans_depot").hide();
+			$("#success_msg").text("");
+			$("#wait_image_to_submit").hide();
+			
+			$("#btnTruckInfo").show();
+				
+			$("#err_truck_info").text("");
+			
+			$("#plateNo").val("");
+			
+			$("#platePhoto").val("");
+			
+			
+			
+			$("#trnCusName").val("");
+			$("#drMsName").val("");
+			$("#mobileNo").val("");
+			$("#numOfBag").val("");
+			
+			transCusVal="";	
+			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+			
+			partyVal="";	
+			$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+			
+			$("#tokenNo").val("");
+			
+			if (deptCmboFlag==0){
+				$("#depotCmboDiv").html(localStorage.depotList);	
+				deptCmboFlag=1;
+			}else{
+				$('#depotCmboDiv').empty();
+				$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+			}
 		
-	$("#err_truck_info").text("");
-	
-	$("#plateNo").val("");
-	
-	$("#platePhoto").val("");
-	
-	$( "input:radio[name='transCus']" ).attr('checked','');
-	
-	$("#trnCusName").val("");
-	$("#drMsName").val("");
-	$("#mobileNo").val("");
-	$("#numOfBag").val("");
-	
-	$("input:radio[name='party']" ).attr('checked','');
-	
-	$("#tokenNo").val("");
-	
-	if (deptCmboFlag==0){
-		$("#depotCmboDiv").html(localStorage.depotList);	
-		deptCmboFlag=1;
-	}else{
-		$('#depotCmboDiv').empty();
-		$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
-	}
-	
-	
-	
-	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
-		$(".errorChk").text("Required Sync");
-	}else{		
-		var url = "#newEntry";
-		$.mobile.navigate(url);
+					
+			var url = "#newEntryPage";
+			$.mobile.navigate(url);
 		}
+	
+}
+
+
+function anotherEntry(){
+		location.reload();
+		
+		newEntry()
 	
 	}
 
@@ -302,12 +323,13 @@ function truckInfoSubmit(){
 		//transporter or Customer
 		transOrCus=$("input[name='transCus']:checked").val();
 		
+		
 			
 		trnCusName=$("#trnCusName").val();
 		drMsName=$("#drMsName").val();
 		drMobileNo=$("#mobileNo").val();
 		numOfBag=$("#numOfBag").val();
-		party=$("input[name='party']:checked").val();
+		partyVal=$("input[name='party']:checked").val();
 		tokenNo=$("#tokenNo").val();
 		trans_depot_id=$("#tr_depot_id").val();
 		
@@ -335,53 +357,99 @@ function truckInfoSubmit(){
 			$("#wait_image_to_submit").hide();
 			$("#btnTruckInfo").show();
 		}else{
-			if (plateNo=="" || plateNo==undefined || transOrCus=="" || transOrCus==undefined || trnCusName=="" || trnCusName==undefined || drMsName=="" || drMsName==undefined || drMobileNo=="" || drMobileNo==undefined || numOfBag=="" || numOfBag==undefined || party=="" || party==undefined){
-				
-				$("#err_truck_info").text("Required field ");
+			if (plateNo=="" || plateNo==undefined){
+			
+				$("#err_truck_info").text("Required Plate No ");
 				$("#wait_image_to_submit").hide();
 				$("#btnTruckInfo").show();
-				}else{						
-				/*if(latitude==0 || longitude==0){
-					$(".errorChk").text("Please confirm your location ");
-					$("#btn_ach_submit").show();
-				}else{				
-					if (achPlanId==''){
-						$(".errorChk").text("New records not available");
-						$("#btn_ach_submit").show();
-					}else{*/
-						
-						if (drMobileNo.length<11 || drMobileNo.length>13){
-							$("#err_truck_info").text("Invalid Mobile no");
+			}else{
+				if (transOrCus=="" || transOrCus==undefined){
+		
+					$("#err_truck_info").text("Required Transport Or Customer ");
+					$("#wait_image_to_submit").hide();
+					$("#btnTruckInfo").show();
+				}else{
+					if (trnCusName=="" || trnCusName==undefined){
+		
+						$("#err_truck_info").text("Required Transport or Customer name");
+						$("#wait_image_to_submit").hide();
+						$("#btnTruckInfo").show();
+					}else{
+						if (drMsName=="" || drMsName==undefined){
+		
+							$("#err_truck_info").text("Required Driver Name ");
 							$("#wait_image_to_submit").hide();
 							$("#btnTruckInfo").show();
-						}else{							
-							if (drMobileNo.length==11){
-								drMobileNo='88'+drMobileNo
-								}
-							
-							if((party=="ST")&&(trans_depot_id=="")){
-								$("#err_truck_info").text("Check Stock Transfer Depot.");
+						}else{
+							if (drMobileNo=="" || drMobileNo==undefined){
+		
+								$("#err_truck_info").text("Required Driver Mobile No ");
 								$("#wait_image_to_submit").hide();
 								$("#btnTruckInfo").show();
-							}else{							
-								//imagePathA="test"
-								if (imagePathA!=""){								
-									$("#err_truck_info").text("Syncing photo..");
-									imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
+							}else{
+								if (numOfBag=="" || numOfBag==undefined){
+		
+									$("#err_truck_info").text("Required Capacity(Number of Bag) ");
+									$("#wait_image_to_submit").hide();
+									$("#btnTruckInfo").show();
+								}else{
+									if (partyVal=="" || partyVal==undefined){
+		
+										$("#err_truck_info").text("Required Party ");
+										$("#wait_image_to_submit").hide();
+										$("#btnTruckInfo").show();
+									}else{											
+										/*if(latitude==0 || longitude==0){
+											$(".errorChk").text("Please confirm your location ");
+											$("#btn_ach_submit").show();
+										}else{				
+											if (achPlanId==''){
+												$(".errorChk").text("New records not available");
+												$("#btn_ach_submit").show();
+											}else{*/
+												
+												if (drMobileNo.length<11 || drMobileNo.length>13){
+													$("#err_truck_info").text("Invalid Mobile no");
+													$("#wait_image_to_submit").hide();
+													$("#btnTruckInfo").show();
+												}else{							
+													if (drMobileNo.length==11){
+														drMobileNo='88'+drMobileNo
+														}
 													
-									uploadPhotoTruckPlate(imagePathA, imageName);
+													if((party=="ST")&&(trans_depot_id=="")){
+														$("#err_truck_info").text("Check Stock Transfer Depot.");
+														$("#wait_image_to_submit").hide();
+														$("#btnTruckInfo").show();
+													}else{							
+														//imagePathA="test"
+														if (imagePathA!=""){								
+															$("#err_truck_info").text("Syncing photo..");
+															imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
+																			
+															uploadPhotoTruckPlate(imagePathA, imageName);
+														}
+													}
+												}
+											}
+										
+										/*	}
+										}*///end check location
 								}
 							}
 						}
 					}
-				/*	}
-				}*///end check location
+				}
+			}
+										
 		}//chk photo
 	}
 
 function syncDataTruckInfo(){	
-			$("#wait_image_to_submit").show();			
-		
+			$("#wait_image_to_submit").show();
+			
+			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id);
+			
 			$.ajax({
 					type: 'POST',
 					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+encodeURIComponent(tokenNo)+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id,
@@ -392,16 +460,20 @@ function syncDataTruckInfo(){
 							//----------------
 							$("#plateNo").val("");
 							$("#platePhoto").val("");
-							$( "input:radio[name='transCus']" ).attr('checked','');
+							imagePathA="";
+							
+							transCusVal="";	
+							$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+							
+							partyVal="";	
+							$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
 							
 							$("#trnCusName").val("");
 							$("#drMsName").val("");
 							$("#mobileNo").val("");
 							$("#numOfBag").val("");
 							
-							
-							$("input:radio[name='party']" ).attr('checked','');
-							
+														
 							$("#tokenNo").val("");
 														
 							$("#success_msg").text('Successfully Submitted');
@@ -409,6 +481,7 @@ function syncDataTruckInfo(){
 														
 							var url="#successPage";
 							$.mobile.navigate(url);
+							
 							
 						}else if(result=='Failed1'){
 							$("#err_truck_info").text('Plate No Not Available');									

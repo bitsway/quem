@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>QueM</title>
+        <title>QueueM</title>
 		<link rel="stylesheet" href="static/c.min.css" />
 		<link rel="stylesheet" href="static/jquery.mobile.icons.min.css" />
 		
@@ -13,17 +13,7 @@
         <script src="static/jquery.mobile-1.4.0.min.js"></script>
 		<script src="static/qmanage.js"></script>		
 		
-	<script>
-	$(document).ready(function(){
-		$("#wait_image_login").hide();
-		$("#loginButton").show();
-		
-		first_page();
-		
-	});
-	
 
-    </script>
 	<style>
 	table.tbl_preview tr td { border:1px solid #5FAFAF; background-color:#EFF8F8;}
 	.ui-radio{ width:50%;}
@@ -34,8 +24,42 @@
 	</head>
 	
     <body>
-	
-		<!-- =====================Home page=============== -->
+		 <!--===================== pageSync ==================-->
+		<div data-theme="c" data-role="page" id="login">
+            <div data-theme="c" data-role="header" data-position="fixed">				
+				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+                <h3>Authorization</h3>
+            </div>
+			
+            <div data-role="content">
+            	<div id="error_login" style="color:#C00"></div>                
+                    <form>					
+                        <input name="user_id" id="user_id"  value="" type="text" placeholder="Mobile No">
+                        <input type="text" name="user_pass" id="user_pass"  value="" placeholder="Password">
+                    </form>						
+				
+				<a data-role="button" id="loginButton" onClick="check_user();" >Sync</a>
+				<div align="center"><img id="wait_image_login" style="" width="50px;" src="loading.gif" alt=""></div>
+                                
+                <br><br><br><br><br><br><br><br><br><br>
+                
+               <!-- <input name="clear_auth_check" id="clear_auth_check" data-mini="true" type="checkbox" value="Yes">
+                <label for="clear_auth_check">Confirm Clear Authorization</label>
+                
+                <a data-role="button" onClick="clear_autho();" >Clear Authorization</a>-->
+                <!--<a onClick="clear_autho()" href="#login">Clear Authorization</a>    -->          
+                <br><br><br><br><br><br>
+                       
+            </div>
+			
+        <!-- ==========footer====== -->	
+        <div data-theme="c" data-role="footer" data-position="fixed"></div>
+        
+        </div>		
+
+
+
+<!-- =====================Home page=============== -->
 		<div data-theme="c" data-role="page" id="pageHome">
 			<div data-role="panel" id="routePanel" data-display="overlay" style="width:60%; background-color:#FFF">
 				<!-- panel content goes here unilogo1.jpg-->
@@ -90,42 +114,6 @@
                 </div>	
                 <div data-theme="c" data-role="footer" data-position="fixed"></div>			
             </div>
-		
-
-	        <!--===================== pageSync ==================-->
-		<div data-theme="c" data-role="page" id="login">
-            <div data-theme="c" data-role="header" data-position="fixed">				
-				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
-                <h3>Authorization</h3>
-            </div>
-			
-            <div data-role="content">
-            	<div id="error_login" style="color:#C00"></div>                
-                    <form>					
-                        <input name="user_id" id="user_id"  value="" type="text" placeholder="Mobile No">
-                        <input type="text" name="user_pass" id="user_pass"  value="" placeholder="Password">
-                    </form>						
-				
-				<a data-role="button" id="loginButton" onClick="check_user();" >Sync</a>
-				<div align="center"><img id="wait_image_login" style="" width="50px;" src="loading.gif" alt=""></div>
-                                
-                <br><br><br><br><br><br><br><br><br><br>
-                
-               <!-- <input name="clear_auth_check" id="clear_auth_check" data-mini="true" type="checkbox" value="Yes">
-                <label for="clear_auth_check">Confirm Clear Authorization</label>
-                
-                <a data-role="button" onClick="clear_autho();" >Clear Authorization</a>-->
-                <!--<a onClick="clear_autho()" href="#login">Clear Authorization</a>    -->          
-                <br><br><br><br><br><br>
-                       
-            </div>
-			
-        <!-- ==========footer====== -->	
-        <div data-theme="c" data-role="footer" data-position="fixed"></div>
-        
-        </div>		
-
-
 
 
 <!--=========================== Profile =============-->
@@ -135,7 +123,7 @@
 	}
 
 </style>
-<div data-theme="c" data-role="page" id="newEntry">
+<div data-theme="c" data-role="page" id="newEntryPage">
   <div data-theme="c" data-role="header" data-position="fixed"> 	
     <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
     <a data-role="button" data-rel="back" data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
@@ -185,7 +173,7 @@
         <tr><td width="30%" class="prof_label" >Name<font color="#C40000" style="font-size:20px">*</font></td><td><input name="drMsName" id="drMsName" placeholder="" value="" type="text" maxlength="50" ></td></tr>
         <tr><td width="30%" class="prof_label" >Mobile No<font color="#C40000" style="font-size:20px">*</font></td><td><input name="mobileNo" id="mobileNo" placeholder="" value="" type="number" ></td></tr>
         <tr style="background-color:#CCC; height:20px;"><td colspan="2"></td></tr>
-        <tr><td width="30%" class="prof_label" >Capecity<font color="#C40000" style="font-size:20px">*</font></td><td><input name="numOfBag" id="numOfBag" placeholder="Bag" value="" type="number" maxlength="4" ></td></tr>
+        <tr><td width="30%" class="prof_label" >Capecity<font color="#C40000" style="font-size:20px">*</font></td><td><input name="numOfBag" id="numOfBag" placeholder="Bag" value="" type="number" maxlength="4" min="0" ></td></tr>
         <tr><td width="30%" class="prof_label">Party<font color="#C40000" style="font-size:20px">*</font></td><td>
             <fieldset data-role="controlgroup" >
                 <input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();">
@@ -255,7 +243,7 @@
         <br/>
         <br/>
         <br/>
-        <a data-role="button" onClick="newEntry();" >Another Entry</a>
+        <a data-role="button" onClick="anotherEntry();" >Another Entry</a>
                
         
     </div><!--/cont-->
