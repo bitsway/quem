@@ -1,9 +1,9 @@
 
 //online
-var apipath="http://e2.businesssolutionapps.com/quem/syncmobile/";
+var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
 
 //local
-//var apipath="http://127.0.0.1:8000/quem/syncmobile/";
+//var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
 
 var plateNo="";	
@@ -29,13 +29,40 @@ var transCusVal="";
 var partyVal="";
 
 
+var latitude="";
+var longitude="";
+
+
+
+function getLocationInfoAch() {	
+	
+	navigator.geolocation.getCurrentPosition(onSuccess, onError);		
+	$(".errorChk").html("Confirming location. Please wait.");
+}
+// onSuccess Geolocation
+function onSuccess(position) {
+	$("#q_lat").val(position.coords.latitude);
+	$("#q_long").val(position.coords.longitude);
+	$(".errorChk").html("Location Confirmed");
+}
+// onError Callback receives a PositionError object
+function onError(error) {
+   $("#q_lat").val(0);
+   $("#q_long").val(0);
+   $(".errorChk").html("Failed to Confirmed Location.");
+}
+
+
 $(document).ready(function(){
 		$("#wait_image_login").hide();
 		$("#loginButton").show();		
 		if ((localStorage.synced!='YES')){
-			var url = "#login";
+			var url = "#login";				
+		}else{
+			
+			$("#q_lat").val("");
+			$("#q_long").val("");
 				
-		}else{		
 			$("#btn_take_pic").show();																		
 			$("#btnTruckInfo").show();
 									
@@ -96,7 +123,6 @@ $(document).ready(function(){
 
 function menuClick(){
 	
-	$.mobile.navigate("#pageHome");
 	location.reload();
 	
 }
@@ -233,7 +259,9 @@ function check_user() {
 function newEntry(){
 		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 			$(".errorChk").text("Required Sync");
-		}else{	
+		}else{
+			getLocationInfoAch()
+			
 			$("#trans_depot").hide();
 			$("#success_msg").text("");
 			$("#wait_image_to_submit").hide();
@@ -245,8 +273,6 @@ function newEntry(){
 			$("#plateNo").val("");
 			
 			$("#platePhoto").val("");
-			
-			
 			
 			$("#trnCusName").val("");
 			$("#drMsName").val("");
@@ -268,6 +294,7 @@ function newEntry(){
 				$('#depotCmboDiv').empty();
 				$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
 			}
+			
 		
 					
 			var url = "#newEntryPage";
@@ -280,7 +307,8 @@ function newEntry(){
 function anotherEntry(){
 		location.reload();
 		
-		newEntry()
+		var url = "#newEntryPage";
+		$.mobile.navigate(url);
 	
 	}
 
@@ -340,17 +368,17 @@ function truckInfoSubmit(){
 			trans_depot_id="-";
 		}
 		
-		//latitude=$("#ach_lat").val();
-		//longitude=$("#ach_long").val();
+		latitude=$("#q_lat").val();
+		longitude=$("#q_long").val();
 		
 		
 		
-		/*if (latitude==undefined || latitude==''){
+		if (latitude==undefined || latitude==''){
 			latitude=0;
 			}
 		if (longitude==undefined || longitude==''){
 			longitude=0;
-			}*/
+			}
 		
 		if (platePhoto=='' || platePhoto==undefined){
 			$("#err_truck_info").text("Please confirm Photo ");
@@ -448,16 +476,19 @@ function truckInfoSubmit(){
 function syncDataTruckInfo(){	
 			$("#wait_image_to_submit").show();
 			
-			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id);
+			//alert(apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+tokenNo+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id+'&latitude='+latitude+'&longitude='+longitude);
 			
 			$.ajax({
 					type: 'POST',
-					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+encodeURIComponent(tokenNo)+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id,
+					url:apipath+'submitTruckInfo?cid=LAFARGE&mobile_no='+localStorage.mobile_no+'&syncCode='+localStorage.sync_code+'&plateNo='+encodeURIComponent(plateNo)+'&transOrCus='+transOrCus+'&trnCusName='+encodeURIComponent(trnCusName)+'&drMsName='+encodeURIComponent(drMsName)+'&drMobileNo='+drMobileNo+'&numOfBag='+numOfBag+'&party='+party+'&tokenNo='+encodeURIComponent(tokenNo)+'&plate_photo='+imageName+'&tr_depot_id='+trans_depot_id+'&latitude='+latitude+'&longitude='+longitude,
 					   
 					   success: function(result) {
 							//alert(result);
 						if(result=='Success'){							
 							//----------------
+							$("#q_lat").val("");
+							$("#q_long").val("");
+			
 							$("#plateNo").val("");
 							$("#platePhoto").val("");
 							imagePathA="";
@@ -481,7 +512,6 @@ function syncDataTruckInfo(){
 														
 							var url="#successPage";
 							$.mobile.navigate(url);
-							
 							
 						}else if(result=='Failed1'){
 							$("#err_truck_info").text('Plate No Not Available');									
@@ -684,6 +714,7 @@ function recQueueDetails(que_arrayStr){
 
 
 function printSlip(){
+			
 		var sl_no=$('#ds_sl_no').text();		
 		//alert(apipath+'get_slip?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&sl_no='+sl_no);
 				
@@ -692,7 +723,11 @@ function printSlip(){
 			  success: function(result) {
 				  if(result=='Success'){				  		
 					//print();					
-					location.reload();
+					//location.reload();
+					$("#btn_token").hide();
+					
+					var url = "#dialogRecDetails";
+					$.mobile.navigate(url);		
 				  }
 				}
 			});	
@@ -744,7 +779,7 @@ function parking2ListPage(){
 
 
 function recParking2Details(pr_2_arrayStr){	
-		$("#btn_token").show();
+		$("#btn_token").hide();
 		pr2Array=pr_2_arrayStr.split("fdfd");		
 		$('#ds_sl_no').text(pr2Array[0]);
 		$('#ds_palat_no').text(pr2Array[1]);
@@ -769,36 +804,77 @@ function recParking2Details(pr_2_arrayStr){
 
 
 
-function searchListPage(){
+function searchListPage(){	
+	
 	if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 		$(".errorChk").text("Required Sync");
 	}else{
-		$("#wait_image_search").hide();
-		$('#tbl_show_all').hide();
-		var url = "#page_search_show";
-		$.mobile.navigate(url);
-		}
+		var depot_truck_list=''		
+				
+		//alert(apipath+'get_depot_truck_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code);
+		$("#truck_list_search").val("");
+		
+			$.ajax({
+				url:apipath+'get_depot_truck_list?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code,
+				
+			  success: function(result) {
+						all_list=result;
+						
+						$('#error_search').text("");
+						all_array=all_list.split("rdrd");
+											
+						for (var i=0; i < all_array.length; i++){
+							var truckArray = all_array[i].split('|');
+							var plateNo=truckArray[0];
+							var slNo=truckArray[1];
+							if(plateNo!=''){
+								depot_truck_list+='<li class="ui-btn ui-shadow ui-corner-all" style="border-bottom-style:solid; border-color:#CBE4E4;border-bottom-width:thin"><a onClick="searchAllList(\''+slNo+'\')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+plateNo+'-'+slNo+'</a></li>';
+							}
+						}								
+						//---								
+						
+						$("#wait_image_search").hide();	
+						
+						var truck_list_id_ob=$('#truck_list_serch_ul');
+						truck_list_id_ob.empty()
+						truck_list_id_ob.append(depot_truck_list);
+								
+						
+						$("#wait_image_search").hide();
+						$('#tbl_show_all').hide();
+						var url = "#page_search_show";
+						$.mobile.navigate(url);
+						truck_list_id_ob.listview("refresh");
+						
+						
+					}			
+			});	
 	
-	}
+	}	
+}
 
 // ------------------------------------- Report data
 
-function searchAllList(){
+function searchAllList(slNo){
+		
 		$('#tbl_show_all').hide();
-		var search_sl=$("#search_sl").val();
+		var search_sl=slNo;
+		$('#truck_list_serch_ul').empty();
 			
 		$("#wait_image_search").hide();
-				//alert(apipath+'get_search_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&search_sl='+search_sl); 
-	
+		//alert(apipath+'get_search_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&search_sl='+search_sl); 
+		
+		
+						
 		$.ajax({
 				url:apipath+'get_search_que_card?cid=LAFARGE&mobile='+localStorage.mobile_no+'&sync_code='+localStorage.sync_code+'&search_sl='+search_sl,
 				
 			  success: function(result) {
 						all_list=result;
 						
-						if (all_list==""){
+						if (all_list=="" ){
 							$('#tbl_show_all').hide();
-							$('#error_search').text("Invalid Sl No");
+							$('#error_search').text("Truck Not Found");
 							
 							}else{
 								$('#error_search').text("");
@@ -818,15 +894,29 @@ function searchAllList(){
 								
 								
 								$('#tbl_show_all').show();
+								truck_list_id_ob.listview("refresh");								
 								}					
 						
 						
 					
 						$("#wait_image_search").hide();	
 					}
-			});	
+			});		
 	}
+
+
+/*function chkSearch(){
 	
+	var searchVal=$("#truck_list_search").val();
+	
+	if (searchVal!=""){		
+		searchListPage()
+	}else{
+		truck_list_id_ob.listview("refresh");
+		}
+	
+	
+	}*/
 
 //---------------------- Exit Application
 function exit() {	

@@ -151,7 +151,9 @@
     <ul data-role="listview" data-inset="true" data-theme="c" >
         <a data-role="button" id="btn_take_pic" onClick="getTruckPalateImage();" class="ui-btn" >Take Picture<font color="#C40000" style="font-size:20px">*</font></a>       
         <img src="" width="128" height="128" alt="Image" id="myImageA">
-        <input name="platePhoto" id="platePhoto" value=""   type="hidden">            
+        <input name="platePhoto" id="platePhoto" value=""   type="hidden"> 
+        <input name="q_lat" id="q_lat" value=""   type="hidden">
+        <input name="q_long" id="q_long" value=""  type="hidden">           
     </ul>
      
         
@@ -358,21 +360,26 @@ Driver Mobile</strong></td>
 			
             <div data-role="content">
             	<div id="error_search" style="color:#C00"></div>
-                  <input name="search_sl" id="search_sl"  value="" type="text" placeholder="SL No">     
-                          
-				<a data-role="button" id="btnSearch" onClick="searchAllList();" >Search</a>
+                 <!-- <input name="search_sl" id="search_sl"  value="" type="text" placeholder="SL No">
+                  <input name="search_plate_no" id="search_plate_no"  value="" type="text" placeholder="Plate No">
+                  <br/>     -->
+                  <input id="truck_list_search" data-type="search" placeholder="Search Plate No">
+                <ul id="truck_list_serch_ul" data-role="listview" data-filter="true" data-filter-reveal="true" data-input="#truck_list_search" data-inset="true"></ul>
+                
+                <br/>        
+				<!--<a data-role="button" id="btnSearch" onClick="searchAllList();" >Search</a>-->
 				<div align="center"><img id="wait_image_search" style="" width="50px;" src="loading.gif" alt=""></div>
                  
                  <table id="tbl_show_all" border="0" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; font-size:70%;">
                     <tr >
                       <td style="width:40%;" ><strong>SL No</strong></td>
                       <td style="width:1%;" >:</td>
-                      <td style="width:50%;" id="s_sl_no"></td>              
+                      <td style="width:50%; font-size:19px; color:#00A854; font-weight:bold;" id="s_sl_no"></td>              
                     </tr>
                     <tr >
                       <td style="width:40%;" ><strong>Plate No</strong></td>
                       <td style="width:1%;" >:</td>
-                      <td style="width:50%;" id="s_plt_no" ></td>              
+                      <td style="width:50%; font-size:17px; color:#00A854; font-weight:bold;" id="s_plt_no" ></td>              
                     </tr>
                     <tr >
                       <td style="width:40%;" ><strong>Driver`s Name</strong></td>
@@ -443,12 +450,12 @@ Driver Mobile</strong></td>
      	<tr >
           <td style="width:30%;" >SL No</td>
           <td style="width:1%;" >:</td>
-          <td style="width:60%;" id="ds_sl_no" ></td>
+          <td style="width:60%; font-size:19px; color:#00A854; font-weight:bold;" id="ds_sl_no" ></td>
         </tr>
         <tr>
           <td style="width:30%;" >Plate No</td>
           <td style="width:1%;" >:</td>
-          <td style="width:60%; font-size:17px; color:#00A854" id="ds_palat_no" ></td>
+          <td style="width:60%; font-size:17px; color:#00A854;" id="ds_palat_no" ></td>
         </tr>
         <tr>
           <td style="width:30%;" >Driver Name</td>
@@ -488,9 +495,11 @@ Driver Mobile</strong></td>
      </table>
   	
     <button class="button" onClick="printSlip();" id="btn_token">Issue Token</button>
-	<br/>
+	<br/><br/><br/><br/><br/>
    
-    <a data-role="button" data-rel="back" >Close</a>
+    <a data-role="button" data-rel="back"  >Close</a><br/>
+    <button class="button" onClick="print();" style="display:none;" >Print</button>
+	
   
     <br/><br/>
   </div>
