@@ -161,12 +161,8 @@
     	<tbody bgcolor="#BFDFDF">        
          <tr style="background-color:#CCC"><td colspan="2"><strong>Transporter/Customer:<font color="#C40000" style="font-size:20px">*</font></strong></td></tr>
     	<tr style="border-color: #F33"><td colspan="2" style="border-color: #F33;">
-            <fieldset data-role="controlgroup" data-type="horizontal" data-theme="c">
-                <input type="radio" name="transCus" id="trans" value="Transporter">
-                <label for="trans">Transporter</label>
-                <input type="radio" name="transCus" id="cus" value="Customer">
-                <label for="cus">Customer</label>                   
-            </fieldset>
+        	<div id="transCusDiv"></div>
+          
         </td></tr>
         
         <tr><td width="30%" class="prof_label" >Name<font color="#C40000" style="font-size:20px">*</font></td><td><input name="trnCusName" id="trnCusName" placeholder="" value="" type="text" maxlength="50" ></td></tr>        
@@ -177,14 +173,8 @@
         <tr style="background-color:#CCC; height:20px;"><td colspan="2"></td></tr>
         <tr><td width="30%" class="prof_label" >Capecity<font color="#C40000" style="font-size:20px">*</font></td><td><input name="numOfBag" id="numOfBag" placeholder="Bag" value="" type="number" maxlength="4" min="0" ></td></tr>
         <tr><td width="30%" class="prof_label">Party<font color="#C40000" style="font-size:20px">*</font></td><td>
-            <fieldset data-role="controlgroup" >
-                <input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();">
-                <label for="cus_pickup">Customer Pick Up</label>
-                <input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();">
-                <label for="tr_del">Delivered</label>
-                <input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();">
-                <label for="tr_st">ST</label>
-            </fieldset>
+        	<div id="partyDiv"></div>
+           
         </td></tr>
          <tr id="trans_depot"><td width="30%" class="prof_label">Depot <font color="#C40000" style="font-size:20px">*</font></td><td>
          <div id="depotCmboDiv"></div>
@@ -267,7 +257,7 @@
     <div data-role="content">
         <div id="error_parking_1_list" style="color:#C00"></div>	
         
-        <a data-role="button" onClick="parking1ListPage();">Refresh (<span id="count_p1_list"></span>)</a>
+        <a data-role="button" onClick="parking1ListPage();">Refresh   Total Count - <span id="count_p1_list"></span></a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
@@ -300,7 +290,7 @@ Driver Mobile</strong></td>
     <div data-role="content">
         <div id="error_to_queue_list" style="color:#C00"></div>	
         
-        <a data-role="button" onClick="queueListPage();">Refresh (<span id="count_queue_list"></span>)</a>
+        <a data-role="button" onClick="queueListPage();">Refresh   Total Count - <span id="count_queue_list"></span></a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
@@ -332,7 +322,7 @@ Driver Mobile</strong></td>
         <div id="error_parking_2_list" style="color:#C00"></div>	
         
                 
-        <a data-role="button" onClick="parking2ListPage();">Refresh(<span id="count_p2_list"></span>)</a>
+        <a data-role="button" onClick="parking2ListPage();">Refresh   Total Count - <span id="count_p2_list"></span></a>
         
         <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >

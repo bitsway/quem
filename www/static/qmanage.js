@@ -24,6 +24,9 @@ var trans_depot_id="";
 var imageName = "";
 var imagePathA="";
 
+var transCusFlag=0;
+var partyFlag=0;
+
 var deptCmboFlag=0;
 var transCusVal="";
 var partyVal="";
@@ -93,6 +96,34 @@ function recEmpty(){
 		$("#plateNo").val("");
 		$("#platePhoto").val("");
 		
+		
+		var trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+        
+		if (transCusFlag==0){
+			$("#transCusDiv").html(trans_or_cus);	
+			transCusFlag=1;			
+		}else{
+			$('#transCusDiv').empty();
+			$('#transCusDiv').append(trans_or_cus).trigger('create');
+			
+			}    
+		
+		
+		var partyRdo='<fieldset data-role="controlgroup" ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+		
+		if (partyFlag==0){
+			$("#partyDiv").html(partyRdo);	
+			partyFlag=1;			
+		}else{
+			$('#partyDiv').empty();
+			$('#partyDiv').append(partyRdo).trigger('create');
+			
+			}  
+		
+		
+		//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+				
+		//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
 		transCusVal="";	
 		$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 		
@@ -231,9 +262,9 @@ function newEntry(){
 		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 			$(".errorChk").text("Required Sync");
 		}else{
-			recEmpty();
+			recEmpty()
 			
-			getLocationInfoAch();	
+			getLocationInfoAch()				
 					
 			var url = "#newEntryPage";
 			$.mobile.navigate(url);
@@ -265,6 +296,8 @@ function chkParty(){
 			$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
 		}
 		
+		
+		
 	}else{
 		$('#depotCmboDiv').empty();
 		$("#trans_depot").hide();
@@ -287,6 +320,8 @@ function truckInfoSubmit(){
 		
 		//transporter or Customer
 		transOrCus=$("input[name='transCus']:checked").val();
+		
+		
 			
 		trnCusName=$("#trnCusName").val();
 		drMsName=$("#drMsName").val();
@@ -305,7 +340,9 @@ function truckInfoSubmit(){
 		
 		latitude=$("#q_lat").val();
 		longitude=$("#q_long").val();
-				
+		
+		
+		
 		if (latitude==undefined || latitude==''){
 			latitude=0;
 			}
@@ -748,7 +785,7 @@ function searchListPage(){
 							var plateNo=truckArray[0];
 							var slNo=truckArray[1];
 							if(plateNo!=''){
-								depot_truck_list+='<li class="ui-btn ui-shadow ui-corner-all" style="border-bottom-style:solid; border-color:#CBE4E4;border-bottom-width:thin"><a onClick="searchAllList(\''+slNo+'\')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+plateNo+'-'+slNo+'</a></li>';
+								depot_truck_list+='<li class="ui-btn ui-shadow ui-corner-all" data-icon="false" style="border-bottom-style:solid; border-color:#CBE4E4;border-bottom-width:thin"><a onClick="searchAllList(\''+slNo+'\')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+plateNo+'-'+slNo+'</a></li>';
 							}
 						}								
 						//---								
