@@ -5,16 +5,16 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>QueueM</title>
-		<link rel="stylesheet" href="static/c.min.css" />
-		<link rel="stylesheet" href="static/jquery.mobile.icons.min.css" />
+		<link rel="stylesheet" type="text/css" href="static/c.min.css" />
+		<link rel="stylesheet" type="text/css" href="static/jquery.mobile.icons.min.css" />
 		
-		<link rel="stylesheet" href="static/jquery.mobile-1.4.0.min.css" />
-        <script src="static/jquery-1.10.2.min.js"></script>
-        <script src="static/jquery.mobile-1.4.0.min.js"></script>
-		<script src="static/qmanage.js"></script>		
+		<link rel="stylesheet" type="text/css" href="static/jquery.mobile-1.4.0.min.css" />
+        <script type="text/javascript" src="static/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="static/jquery.mobile-1.4.0.min.js"></script>
+		<script type="text/javascript" src="static/qmanage.js"></script>		
 		
 
-	<style>
+	<style type="text/css">
 	table.tbl_preview tr td { border:1px solid #5FAFAF; background-color:#EFF8F8;}
 	.ui-radio{ width:50%;}
 	.ui-controlgroup-controls{ width:100%;}
@@ -32,7 +32,7 @@
 		 <!--===================== pageSync ==================-->
 		<div data-theme="c" data-role="page" id="login">
             <div data-theme="c" data-role="header" data-position="fixed">				
-				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+				<a  data-role="button" href="#pageHome" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
                 <h3>Authorization</h3>
             </div>
 			
@@ -148,13 +148,18 @@
             <input name="plateNo" id="plateNo" placeholder="" value="" type="text" maxlength="20" style="font-size:200%; font-weight:bold; text-align:center;" >
         </li>
     </ul>
-    <ul data-role="listview" data-inset="true" data-theme="c" >
-        <a data-role="button" id="btn_take_pic" onClick="getTruckPalateImage();" class="ui-btn" >Take Picture<font color="#C40000" style="font-size:20px">*</font></a>       
+    <Div >    	
+		<a data-role="button" id="btn_take_pic" onClick="getTruckPalateImage();" class="ui-btn" >Take Picture<font color="#C40000" style="font-size:20px">*</font></a>       
+    
+    
         <img src="" width="128" height="128" alt="Image" id="myImageA">
+    
         <input name="platePhoto" id="platePhoto" value=""   type="hidden"> 
         <input name="q_lat" id="q_lat" value=""   type="hidden">
-        <input name="q_long" id="q_long" value=""  type="hidden">           
-    </ul>
+        <input name="q_long" id="q_long" value=""  type="hidden">    		
+    	
+                  
+    </Div>
      
         
     <table width="100%">
@@ -221,7 +226,7 @@
 
 <div data-theme="c" data-role="page" id="successPage">
     <div data-theme="c" data-role="header" data-position="fixed">
-    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
         <h3>Success</h3>
     </div>
@@ -247,9 +252,9 @@
 
 <!-- ===================== parking Page================== -->
 
-<div data-theme="c" data-role="page" id="page_parking_1_show">
+<div data-theme="c" data-role="page" id="page_parking_1_show" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed">
-    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
         <h3>Parking 1</h3>
     </div>
@@ -259,7 +264,7 @@
         
         <a data-role="button" onClick="parking1ListPage();">Refresh   Total Count - <span id="count_p1_list"></span></a>
         
-        <table  border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
+        <table border="1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-role="table" data-theme="d"  data-mode="display:none" style="cell-spacing:0px; width:100%; border-bottom:solid; border-bottom-color:#999; font-size:70%;">
         	<tr >
               <td style="width:50%;" ><strong>SL No<br>
 Plate No</strong></td>
@@ -280,9 +285,9 @@ Driver Mobile</strong></td>
 
 <!-- =====================Queue Page================== -->
 
-<div data-theme="c" data-role="page" id="page_to_queue_show">
+<div data-theme="c" data-role="page" id="page_to_queue_show" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed">
-    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
         <h3>Queue</h3>
     </div>
@@ -311,9 +316,9 @@ Driver Mobile</strong></td>
 
 <!-- ===================== Parking 2 Page================== -->
 
-<div data-theme="c" data-role="page" id="page_parking_2_show">
+<div data-theme="c" data-role="page" id="page_parking_2_show" style="overflow:scroll;">
     <div data-theme="c" data-role="header" data-position="fixed">
-    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+    <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
     <a data-role="button" data-rel="back"  data-icon="arrow-l" data-iconpos="left" class="ui-btn-right">Back</a>
         <h3>Parking 2</h3>
     </div>
@@ -343,9 +348,9 @@ Driver Mobile</strong></td>
 
    
 <!--===================== search page ==================-->
-		<div data-theme="c" data-role="page" id="page_search_show">
+		<div data-theme="c" data-role="page" id="page_search_show" style="overflow:scroll;">
             <div data-theme="c" data-role="header" data-position="fixed">				
-				<a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+				<a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
                 <h3>Search</h3>
             </div>
 			
@@ -430,7 +435,7 @@ Driver Mobile</strong></td>
        
 <div data-theme="c" data-role="page" data-transition="slidedown" id="dialogRecDetails">
 	<div data-theme="c" data-role="header" data-position="fixed">				
-        <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img src="menu.png"></a>
+        <a  data-role="button" href="#" onClick="menuClick();" class="ui-btn-left ui-btn-icon-notext"><img alt="" src="menu.png"></a>
         <h3>Details Information</h3>
     </div>
   

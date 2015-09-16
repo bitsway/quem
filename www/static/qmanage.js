@@ -38,8 +38,9 @@ var longitude="";
 
 
 function getLocationInfoAch() {	
+	var options = { enableHighAccuracy: false};
 	
-	navigator.geolocation.getCurrentPosition(onSuccess, onError);		
+	navigator.geolocation.getCurrentPosition(onSuccess, onError, options);		
 	$(".errorChk").html("Confirming location. Please wait.");
 }
 // onSuccess Geolocation
@@ -60,17 +61,19 @@ $(document).ready(function(){
 		$("#wait_image_login").hide();
 		$("#loginButton").show();		
 		if ((localStorage.synced!='YES')){
-			var url = "#login";				
+			var url = "#login";	
+			$.mobile.navigate(url);			
 		}else{
-			recEmpty();
+			recEmpty();			
 			
 		}
 		
-		$.mobile.navigate(url);
+		
 		
 	});
 
 function recEmpty(){
+		
 		$("#err_truck_info").text("");
 		$("#q_lat").val("");
 		$("#q_long").val("");
@@ -95,6 +98,7 @@ function recEmpty(){
 		//------------------------------	
 		$("#plateNo").val("");
 		$("#platePhoto").val("");
+		imagePathA=""
 		
 		
 		var trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
@@ -109,7 +113,7 @@ function recEmpty(){
 			}    
 		
 		
-		var partyRdo='<fieldset data-role="controlgroup" ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+		var partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
 		
 		if (partyFlag==0){
 			$("#partyDiv").html(partyRdo);	
@@ -262,6 +266,7 @@ function newEntry(){
 		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 			$(".errorChk").text("Required Sync");
 		}else{
+			
 			recEmpty()
 			
 			getLocationInfoAch()				
@@ -456,6 +461,11 @@ function syncDataTruckInfo(){
 							//alert(result);
 						if(result=='Success'){							
 							//----------------
+							imagePathA=""
+							$("#platePhoto").val("");
+							$("#q_lat").val("");
+							$("#q_long").val("");
+							
 							recEmpty();
 														
 							$("#success_msg").text('Successfully Submitted');
