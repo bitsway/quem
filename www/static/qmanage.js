@@ -1,9 +1,9 @@
 
 //online
-var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
+//var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
 
 //local
-//var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
+var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
 
 var plateNo="";	
@@ -66,24 +66,7 @@ function onError(error) {
 $(document).ready(function(){
 		$("#wait_image_login").hide();
 		$("#loginButton").show();	
-			
-		if ((localStorage.synced!='YES')){
-			 url = "#login";						
-		}else{
-			recEmpty();			
-			url = "#pageHome";
-		}
-		$.mobile.navigate(url);
 		
-		
-	});
-
-function recEmpty(){
-		
-		$("#err_truck_info").text("");
-		$("#q_lat").val("");
-		$("#q_long").val("");
-			
 		$("#btn_take_pic").show();																		
 		$("#btnTruckInfo").show();
 								
@@ -92,87 +75,151 @@ function recEmpty(){
 		$("#wait_image_to_queue_list").hide();
 		$("#wait_image_parking_2_list").hide();
 		
-		
-		
 		$("#wait_image_search").hide();
 		$('#tbl_show_all').hide();
 		$("#trans_depot").hide();
 		
 		$("#wait_image_to_submit").hide();
 		
-		
-		//------------------------------	
-		$("#plateNo").val("");
-		$("#platePhoto").val("");
-		imagePathA=""
-		
-		
-		trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
-        
-		if (transCusFlag==0){
-			$("#transCusDiv").html(trans_or_cus);	
-			transCusFlag=1;			
-		}else{
-			$('#transCusDiv').empty();
-			$('#transCusDiv').append(trans_or_cus).trigger('create');
 			
-			}    
-		
-		
-		partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
-		
-		if (partyFlag==0){
-			$("#partyDiv").html(partyRdo);	
-			partyFlag=1;			
+		if ((localStorage.synced!='YES')){
+			 url = "#login";						
 		}else{
-			$('#partyDiv').empty();
-			$('#partyDiv').append(partyRdo).trigger('create');
+			$("#plateNo").val("");
+			$("#platePhoto").val("");
+			imagePathA=""
 			
-			}  
-		
-		
-		//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+			
+			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+			
+			if (transCusFlag==0){
+				$("#transCusDiv").html(trans_or_cus);	
+				transCusFlag=1;			
+			}else{
+				$('#transCusDiv').empty();
+				$('#transCusDiv').append(trans_or_cus).trigger('create');
 				
-		//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
-		transCusVal="";	
-		$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
-		
-		$("#trnCusName").val("");
-		$("#drMsName").val("");
-		$("#mobileNo").val("");
-		$("#numOfBag").val("");
-		
-		partyVal="";	
-		$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
-		
-		
-		$("#tokenNo").val("");
-		
-		$("#btn_take_pic").show();
-		
-		if (deptCmboFlag==0){
-			$("#depotCmboDiv").html(localStorage.depotList);	
-			deptCmboFlag=1;
-		}else{
-			$('#depotCmboDiv').empty();
-			$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+				}    
+			
+			
+			partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+			
+			if (partyFlag==0){
+				$("#partyDiv").html(partyRdo);	
+				partyFlag=1;			
+			}else{
+				$('#partyDiv').empty();
+				$('#partyDiv').append(partyRdo).trigger('create');
+				
+				}  
+			
+			
+			//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+					
+			//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+			transCusVal="";	
+			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+			
+			$("#trnCusName").val("");
+			$("#drMsName").val("");
+			$("#mobileNo").val("");
+			$("#numOfBag").val("");
+			
+			partyVal="";	
+			$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+			
+			
+			$("#tokenNo").val("");
+					
+			url = "#pageHome";
 		}
+		$.mobile.navigate(url);
 		
-		if (localStorage.outerPark=="NO"){
-			$("#btnParking1").hide();
-			$("#btnQueue").hide();
-			$("#btnParking2").hide();
-			}
-	
-	
-	
-}
+		
+	});
+
 
 
 
 function menuClick(){
 	
-	recEmpty();
+	$("#btn_take_pic").show();																		
+	$("#btnTruckInfo").show();
+							
+	$("#wait_image_login").hide();
+	$("#wait_image_parking_1_list").hide();
+	$("#wait_image_to_queue_list").hide();
+	$("#wait_image_parking_2_list").hide();
+	
+	$("#wait_image_search").hide();
+	$('#tbl_show_all').hide();
+	$("#trans_depot").hide();
+	
+	$("#wait_image_to_submit").hide();
+	
+	$("#err_truck_info").text("");
+	
+	$("#plateNo").val("");
+	$("#platePhoto").val("");
+	imagePathA=""
+	
+	
+	trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+	
+	if (transCusFlag==0){
+		$("#transCusDiv").html(trans_or_cus);	
+		transCusFlag=1;			
+	}else{
+		$('#transCusDiv').empty();
+		$('#transCusDiv').append(trans_or_cus).trigger('create');
+		
+		}    
+	
+	
+	partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+	
+	if (partyFlag==0){
+		$("#partyDiv").html(partyRdo);	
+		partyFlag=1;			
+	}else{
+		$('#partyDiv').empty();
+		$('#partyDiv').append(partyRdo).trigger('create');
+		
+		}  
+	
+	
+	//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+			
+	//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+	transCusVal="";	
+	$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+	
+	$("#trnCusName").val("");
+	$("#drMsName").val("");
+	$("#mobileNo").val("");
+	$("#numOfBag").val("");
+	
+	partyVal="";	
+	$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+	
+	
+	$("#tokenNo").val("");
+	
+	$("#btn_take_pic").show();
+	
+	if (deptCmboFlag==0){
+		$("#depotCmboDiv").html(localStorage.depotList);	
+		deptCmboFlag=1;
+	}else{
+		$('#depotCmboDiv').empty();
+		$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+	}
+	
+	if (localStorage.outerPark=="NO"){
+		$("#btnParking1").hide();
+		$("#btnQueue").hide();
+		$("#btnParking2").hide();
+	}	
 	
 	url = "#pageHome";
 	$.mobile.navigate(url);
@@ -229,8 +276,6 @@ function check_user() {
 															
 									localStorage.mobile_no=user_id;
 									
-									recEmpty();
-									
 									
 									//----------------
 									
@@ -274,8 +319,77 @@ function newEntry(){
 		if(localStorage.sync_code==undefined || localStorage.sync_code==""){
 			$(".errorChk").text("Required Sync");
 		}else{
+			$("#btn_take_pic").show();																		
+			$("#btnTruckInfo").show();
+									
+			$("#wait_image_login").hide();
+			$("#wait_image_parking_1_list").hide();
+			$("#wait_image_to_queue_list").hide();
+			$("#wait_image_parking_2_list").hide();
 			
-			recEmpty()
+			$("#wait_image_search").hide();
+			$('#tbl_show_all').hide();
+			$("#trans_depot").hide();
+			
+			$("#wait_image_to_submit").hide();
+			$("#err_truck_info").text("");
+			
+			$("#plateNo").val("");
+			$("#platePhoto").val("");
+			imagePathA=""
+			
+			
+			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+			
+			if (transCusFlag==0){
+				$("#transCusDiv").html(trans_or_cus);	
+				transCusFlag=1;			
+			}else{
+				$('#transCusDiv').empty();
+				$('#transCusDiv').append(trans_or_cus).trigger('create');
+				
+				}    
+			
+			
+			partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+			
+			if (partyFlag==0){
+				$("#partyDiv").html(partyRdo);	
+				partyFlag=1;			
+			}else{
+				$('#partyDiv').empty();
+				$('#partyDiv').append(partyRdo).trigger('create');
+				
+				}  
+			
+			
+			//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+					
+			//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+			transCusVal="";	
+			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+			
+			$("#trnCusName").val("");
+			$("#drMsName").val("");
+			$("#mobileNo").val("");
+			$("#numOfBag").val("");
+			
+			partyVal="";	
+			$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+			
+			
+			$("#tokenNo").val("");
+			
+			$("#btn_take_pic").show();
+		
+			if (deptCmboFlag==0){
+				$("#depotCmboDiv").html(localStorage.depotList);	
+				deptCmboFlag=1;
+			}else{
+				$('#depotCmboDiv').empty();
+				$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+			}
+
 			
 			getLocationInfoAch()				
 					
@@ -423,7 +537,7 @@ function truckInfoSubmit(){
 														$("#wait_image_to_submit").hide();
 														$("#btnTruckInfo").show();
 													}else{							
-														//imagePathA="test"
+														imagePathA="test"
 														if (imagePathA!=""){								
 															$("#err_truck_info").text("Syncing photo..");
 															imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
@@ -459,15 +573,65 @@ function syncDataTruckInfo(){
 							//alert(result);
 						if(result=='Success'){							
 							//----------------
-							imagePathA=""
-							$("#platePhoto").val("");
-							$("#q_lat").val("");
-							$("#q_long").val("");
-							
-							recEmpty();
+								$("#plateNo").val("");
+								$("#platePhoto").val("");
+								imagePathA=""
+								
+								
+								trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+								
+								if (transCusFlag==0){
+									$("#transCusDiv").html(trans_or_cus);	
+									transCusFlag=1;			
+								}else{
+									$('#transCusDiv').empty();
+									$('#transCusDiv').append(trans_or_cus).trigger('create');
+									
+									}    
+								
+								
+								partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+								
+								if (partyFlag==0){
+									$("#partyDiv").html(partyRdo);	
+									partyFlag=1;			
+								}else{
+									$('#partyDiv').empty();
+									$('#partyDiv').append(partyRdo).trigger('create');
+									
+									}  
+								
+								
+								//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+										
+								//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+								transCusVal="";	
+								$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
+								
+								$("#trnCusName").val("");
+								$("#drMsName").val("");
+								$("#mobileNo").val("");
+								$("#numOfBag").val("");
+								
+								partyVal="";	
+								$( "input:radio[name='party'][value='"+partyVal+"']" ).attr('checked','');
+								
+								
+								$("#tokenNo").val("");
+								
+								$("#btn_take_pic").show();
+		
+								if (deptCmboFlag==0){
+									$("#depotCmboDiv").html(localStorage.depotList);	
+									deptCmboFlag=1;
+								}else{
+									$('#depotCmboDiv').empty();
+									$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
+								}
 														
 							$("#success_msg").text('Successfully Submitted');
 							$("#wait_image_to_submit").hide();
+							
 														
 							url="#successPage";
 							$.mobile.navigate(url);
@@ -515,9 +679,9 @@ function onFailA(message) {
 //File upload 
 function uploadPhotoTruckPlate(imageURI, imageName) {
 	
-	//winTruckInfo();
+	winTruckInfo();
 	
-	var options = new FileUploadOptions();
+	/*var options = new FileUploadOptions();
     options.fileKey="upload";
     options.fileName=imageName;
     options.mimeType="image/jpeg";
@@ -529,7 +693,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
+	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);*/
 	
 }
 
