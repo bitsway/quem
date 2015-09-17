@@ -24,7 +24,10 @@ var trans_depot_id="";
 var imageName = "";
 var imagePathA="";
 
+var trans_or_cus="";
 var transCusFlag=0;
+
+var partyRdo="";
 var partyFlag=0;
 
 var deptCmboFlag=0;
@@ -34,7 +37,10 @@ var partyVal="";
 
 var latitude="";
 var longitude="";
+var url ="";
 
+var d = new Date();	
+var get_time=d.getTime();
 
 
 function getLocationInfoAch() {	
@@ -59,15 +65,15 @@ function onError(error) {
 
 $(document).ready(function(){
 		$("#wait_image_login").hide();
-		$("#loginButton").show();		
+		$("#loginButton").show();	
+			
 		if ((localStorage.synced!='YES')){
-			var url = "#login";	
-			$.mobile.navigate(url);			
+			 url = "#login";						
 		}else{
 			recEmpty();			
-			
+			url = "#pageHome";
 		}
-		
+		$.mobile.navigate(url);
 		
 		
 	});
@@ -101,7 +107,7 @@ function recEmpty(){
 		imagePathA=""
 		
 		
-		var trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+		trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
         
 		if (transCusFlag==0){
 			$("#transCusDiv").html(trans_or_cus);	
@@ -113,7 +119,7 @@ function recEmpty(){
 			}    
 		
 		
-		var partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
+		partyRdo='<fieldset data-role="controlgroup"  ><input type="radio" name="party" id="cus_pickup" value="Customer Pick Up" onChange="chkParty();"><label for="cus_pickup">Customer Pick Up</label><input type="radio" name="party" id="tr_del" value="Delivered" onChange="chkParty();"><label for="tr_del">Delivered</label><input type="radio" name="party" id="tr_st" value="ST" onChange="chkParty();"><label for="tr_st">ST</label></fieldset>';
 		
 		if (partyFlag==0){
 			$("#partyDiv").html(partyRdo);	
@@ -159,8 +165,7 @@ function recEmpty(){
 			}
 	
 	
-	var url = "#pageHome";
-	$.mobile.navigate(url);
+	
 }
 
 
@@ -169,12 +174,15 @@ function menuClick(){
 	
 	recEmpty();
 	
+	url = "#pageHome";
+	$.mobile.navigate(url);
+	
 }
 
 
 
 function get_login() {
-	var url = "#login";
+	url = "#login";
 	$.mobile.navigate(url);
 	}
 				
@@ -183,12 +191,12 @@ function check_user() {
 	var user_id=$("#user_id").val().toUpperCase();
 	var user_pass=$("#user_pass").val();
 	
-	var base_url='';
-	var photo_url='';
+	/*var base_url='';
+	var photo_url='';*/
 	
 	//-----
 	if (user_id=="" || user_id==undefined || user_pass=="" || user_pass==undefined){
-		var url = "#login";      
+		url = "#login";      
 		$.mobile.navigate(url);
 		$("#error_login").html("Required User ID and Password");	
 	}else{
@@ -226,7 +234,7 @@ function check_user() {
 									
 									//----------------
 									
-									var url = "#pageHome";
+									url = "#pageHome";
 									$.mobile.navigate(url);								
 									
 									$(".errorChk").html("Sync Successful");
@@ -250,7 +258,7 @@ function check_user() {
 						  $("#loginButton").show();
 						  $("#error_login").html('Invalid Request');
 						  
-						  var url = "#login";
+						  url = "#login";
 						  $.mobile.navigate(url);	
 					  }
 				  });//end ajax
@@ -271,7 +279,7 @@ function newEntry(){
 			
 			getLocationInfoAch()				
 					
-			var url = "#newEntryPage";
+			url = "#newEntryPage";
 			$.mobile.navigate(url);
 		}
 	
@@ -280,10 +288,7 @@ function newEntry(){
 
 function anotherEntry(){
 		
-		recEmpty()
-				
-		var url = "#newEntryPage";
-		$.mobile.navigate(url);
+		newEntry();
 	
 	}
 
@@ -301,8 +306,6 @@ function chkParty(){
 			$('#depotCmboDiv').append(localStorage.depotList).trigger('create');
 		}
 		
-		
-		
 	}else{
 		$('#depotCmboDiv').empty();
 		$("#trans_depot").hide();
@@ -316,17 +319,12 @@ function truckInfoSubmit(){
 		$("#btnTruckInfo").hide();
 		$("#wait_image_to_submit").show();
 		
-		var d = new Date();	
-		var get_time=d.getTime();	
-		
 		plateNo=$("#plateNo").val();	
 		
 		platePhoto=$("#platePhoto").val();
 		
 		//transporter or Customer
 		transOrCus=$("input[name='transCus']:checked").val();
-		
-		
 			
 		trnCusName=$("#trnCusName").val();
 		drMsName=$("#drMsName").val();
@@ -471,7 +469,7 @@ function syncDataTruckInfo(){
 							$("#success_msg").text('Successfully Submitted');
 							$("#wait_image_to_submit").hide();
 														
-							var url="#successPage";
+							url="#successPage";
 							$.mobile.navigate(url);
 							
 						}else if(result=='Failed1'){
@@ -589,7 +587,7 @@ function parking1ListPage(){
 
 	
 	$("#wait_image_parking_1_list").hide();
-	var url = "#page_parking_1_show";
+	url = "#page_parking_1_show";
 	$.mobile.navigate(url);
 	
 }
@@ -611,7 +609,7 @@ function recParking1Details(recParking1Str){
 		$('#ds_party').text(park_1_array[7]);
 		$('#ds_token').text(park_1_array[8]);	
 		
-		var url = "#dialogRecDetails";
+		url = "#dialogRecDetails";
 		$.mobile.navigate(url);
 		
 	}	
@@ -653,7 +651,7 @@ function queueListPage(){
 
 	
 	$("#wait_image_to_queue_list").hide();
-	var url = "#page_to_queue_show";
+	url = "#page_to_queue_show";
 	$.mobile.navigate(url);
 	
 }
@@ -672,7 +670,7 @@ function recQueueDetails(que_arrayStr){
 		$('#ds_party').text(que_array[7]);
 		$('#ds_token').text(que_array[8]);	
 		
-		var url = "#dialogRecDetails";
+		url = "#dialogRecDetails";
 		$.mobile.navigate(url);		
 	}	
 
@@ -691,7 +689,7 @@ function printSlip(){
 					//location.reload();
 					$("#btn_token").hide();
 					
-					var url = "#dialogRecDetails";
+					url = "#dialogRecDetails";
 					$.mobile.navigate(url);		
 				  }
 				}
@@ -739,7 +737,7 @@ function parking2ListPage(){
 
 	
 	$("#wait_image_parking_2_list").hide();
-	var url = "#page_parking_2_show";
+	url = "#page_parking_2_show";
 	$.mobile.navigate(url);
 	
 }
@@ -759,7 +757,7 @@ function recParking2Details(pr_2_arrayStr){
 		$('#ds_party').text(pr2Array[7]);
 		$('#ds_token').text(pr2Array[8]);	
 		
-		var url = "#dialogRecDetails";
+		url = "#dialogRecDetails";
 		$.mobile.navigate(url);
 		
 	}	
@@ -809,7 +807,8 @@ function searchListPage(){
 						
 						$("#wait_image_search").hide();
 						$('#tbl_show_all').hide();
-						var url = "#page_search_show";
+						
+						url = "#page_search_show";
 						$.mobile.navigate(url);
 						truck_list_id_ob.listview("refresh");
 						
