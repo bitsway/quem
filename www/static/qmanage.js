@@ -88,7 +88,7 @@ $(document).ready(function(){
 			$("#plateNo").val("");
 			$("#platePhoto").val("");
 			imagePathA=""
-			
+			$("#myImageA").attr('src','');
 			
 			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 			
@@ -113,10 +113,7 @@ $(document).ready(function(){
 				
 				}  
 			
-			
-			//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
-					
-			//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+		
 			transCusVal="";	
 			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 			
@@ -162,7 +159,7 @@ function menuClick(){
 	$("#plateNo").val("");
 	$("#platePhoto").val("");
 	imagePathA=""
-	
+	$("#myImageA").attr('src','');
 	
 	trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 	
@@ -188,9 +185,7 @@ function menuClick(){
 		}  
 	
 	
-	//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
-			
-	//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+	
 	transCusVal="";	
 	$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 	
@@ -337,7 +332,7 @@ function newEntry(){
 			$("#plateNo").val("");
 			$("#platePhoto").val("");
 			imagePathA=""
-			
+			$("#myImageA").attr('src','');
 			
 			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 			
@@ -363,9 +358,7 @@ function newEntry(){
 				}  
 			
 			
-			//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
-					
-			//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+		
 			transCusVal="";	
 			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 			
@@ -537,7 +530,7 @@ function truckInfoSubmit(){
 														$("#wait_image_to_submit").hide();
 														$("#btnTruckInfo").show();
 													}else{							
-														imagePathA="test"
+														//imagePathA="test"
 														if (imagePathA!=""){								
 															$("#err_truck_info").text("Syncing photo..");
 															imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
@@ -576,7 +569,7 @@ function syncDataTruckInfo(){
 								$("#plateNo").val("");
 								$("#platePhoto").val("");
 								imagePathA=""
-								
+								$("#myImageA").attr('src','');
 								
 								trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 								
@@ -601,10 +594,7 @@ function syncDataTruckInfo(){
 									
 									}  
 								
-								
-								//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
-										
-								//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
+							
 								transCusVal="";	
 								$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 								
@@ -679,9 +669,9 @@ function onFailA(message) {
 //File upload 
 function uploadPhotoTruckPlate(imageURI, imageName) {
 	
-	winTruckInfo();
+	//winTruckInfo();
 	
-	/*var options = new FileUploadOptions();
+	var options = new FileUploadOptions();
     options.fileKey="upload";
     options.fileName=imageName;
     options.mimeType="image/jpeg";
@@ -693,7 +683,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);*/
+	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
 	
 }
 
