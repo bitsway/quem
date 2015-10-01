@@ -39,9 +39,6 @@ var latitude="";
 var longitude="";
 var url ="";
 
-var d = new Date();	
-var get_time=d.getTime();
-
 
 function getLocationInfoAch() {	
 	var options = { enableHighAccuracy: false};
@@ -87,8 +84,9 @@ $(document).ready(function(){
 		}else{
 			$("#plateNo").val("");
 			$("#platePhoto").val("");
-			imagePathA=""
+			imagePathA="";
 			$("#myImageA").attr('src','');
+			
 			
 			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 			
@@ -113,7 +111,10 @@ $(document).ready(function(){
 				
 				}  
 			
-		
+			
+			//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+					
+			//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
 			transCusVal="";	
 			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 			
@@ -158,8 +159,9 @@ function menuClick(){
 	
 	$("#plateNo").val("");
 	$("#platePhoto").val("");
-	imagePathA=""
+	imagePathA="";
 	$("#myImageA").attr('src','');
+	
 	
 	trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 	
@@ -183,7 +185,6 @@ function menuClick(){
 		$('#partyDiv').append(partyRdo).trigger('create');
 		
 		}  
-	
 	
 	
 	transCusVal="";	
@@ -358,7 +359,7 @@ function newEntry(){
 				}  
 			
 			
-		
+
 			transCusVal="";	
 			$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 			
@@ -423,11 +424,14 @@ function chkParty(){
 
 
 function truckInfoSubmit(){
+		var d = new Date();	
+		var get_time=d.getTime();
+
 		$("#btnTruckInfo").hide();
 		$("#wait_image_to_submit").show();
 		
-		plateNo=$("#plateNo").val();	
-		
+		plateNo=$("#plateNo").val().trim().replace(/-/g,"").replace(/ /g,"").replace(/\//g,"");			
+				
 		platePhoto=$("#platePhoto").val();
 		
 		//transporter or Customer
@@ -533,7 +537,7 @@ function truckInfoSubmit(){
 														//imagePathA="test"
 														if (imagePathA!=""){								
 															$("#err_truck_info").text("Syncing photo..");
-															imageName = localStorage.mobile_no+"_"+get_time+".jpg";	
+															imageName = plateNo+"_"+get_time+".jpg";	
 																			
 															uploadPhotoTruckPlate(imagePathA, imageName);
 														}
@@ -594,7 +598,10 @@ function syncDataTruckInfo(){
 									
 									}  
 								
-							
+								
+								//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
+										
+								//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
 								transCusVal="";	
 								$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
 								
@@ -646,7 +653,7 @@ function syncDataTruckInfo(){
 
 
 //Truck Info
-function getTruckPalateImage() {		
+function getTruckPalateImage() {
 	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 10,
 	destinationType: Camera.DestinationType.FILE_URI });		
 }
