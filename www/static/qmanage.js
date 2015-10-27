@@ -1,7 +1,9 @@
 
 //online
-var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
+//var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
 
+//test
+var apipath="http://eapps001.cloudapp.net/quem_test/syncmobile_150829/";
 //local
 //var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
@@ -38,6 +40,9 @@ var partyVal="";
 var latitude="";
 var longitude="";
 var url ="";
+
+//var d = new Date();	
+//var get_time=d.getTime();
 
 
 function getLocationInfoAch() {	
