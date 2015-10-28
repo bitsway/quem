@@ -39,26 +39,21 @@
             <div data-role="content">
             	<div id="error_login" style="color:#C00"></div>                
                     <form>					
-                        <input name="user_id" id="user_id"  value="" type="text" placeholder="Mobile No">
-                        <input type="text" name="user_pass" id="user_pass"  value="" placeholder="Password">
+                        <input name="user_id" id="user_id"  value="" type="number" placeholder="Mobile No">
+                        <input type="number" name="user_pass" id="user_pass"  value="" placeholder="Password">
                     </form>						
 				
 				<a data-role="button" id="loginButton" onClick="check_user();" >Sync</a>
 				<div align="center"><img id="wait_image_login" style="" width="50px;" src="loading.gif" alt=""></div>
                                 
                 <br><br><br><br><br><br><br><br><br><br>
-                
-               <!-- <input name="clear_auth_check" id="clear_auth_check" data-mini="true" type="checkbox" value="Yes">
-                <label for="clear_auth_check">Confirm Clear Authorization</label>
-                
-                <a data-role="button" onClick="clear_autho();" >Clear Authorization</a>-->
-                <!--<a onClick="clear_autho()" href="#login">Clear Authorization</a>    -->          
+         
                 <br><br><br><br><br><br>
                        
             </div>
 			
         <!-- ==========footer====== -->	
-        <div data-theme="c" data-role="footer" data-position="fixed"></div>
+        <div data-theme="c" data-role="footer" data-position="fixed">2015-10-28</div>
         
         </div>		
 
@@ -117,7 +112,7 @@
                 </div>
                  
                 </div>	
-                <div data-theme="c" data-role="footer" data-position="fixed"> build 2015-10-27</div>			
+                <div data-theme="c" data-role="footer" data-position="fixed"></div>			
             </div>
 
 
@@ -130,18 +125,8 @@
      <h3>New Entry</h3>
   </div>
   
-    <div data-role="content" > 
-  	
-   <!-- <div align="right" width="100%" height="150px" ><img src="" width="100%" height="150px" alt="Shop Photo" id="clientProfileImage"></div>-->
-    
-  	<!--<ul data-inset="true"  data-role="listview">
-        <li>
-            <div><b>Market :</b> <span class="prof_market_class"></span></div>
-            <div><b>Distributor :</b> <span class="prof_distributor_class"></span></div>
-            <div><b>Retailer ID :</b> <span class="prof_retailer_class" style="font-weight:bold"></span></div>
-        </li>
-    </ul>-->
-    
+    <div data-role="content" >   	
+      
     <ul data-role="listview" data-inset="true" data-theme="c" >
         <li class="ui-field-contain" style="background-color:#CCC; font-weight:bold;">Plate No:<font color="#C40000" style="font-size:20px ">*</font></li>
         <li class="ui-field-contain">
@@ -186,7 +171,7 @@
          
         </td></tr>
         <tr><td width="30%" class="prof_label">Token</td><td>
-        <input name="tokenNo" id="tokenNo" placeholder="" value="" type="text" maxlength="20" >
+        <input name="tokenNo" id="tokenNo" placeholder="" value="" type="number" maxlength="20" >
         </td></tr>
                 
     	</tbody>       

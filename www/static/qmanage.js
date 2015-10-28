@@ -2,11 +2,11 @@
 //online
 //var apipath="http://e2.businesssolutionapps.com/quem/syncmobile_150829/";
 
-//test
-var apipath="http://eapps001.cloudapp.net/quem_test/syncmobile_150829/";
 //local
 //var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
+//test
+var apipath="http://eapps001.cloudapp.net/quem_test/syncmobile_150829/";
 
 var plateNo="";	
 		
@@ -340,7 +340,7 @@ function newEntry(){
 			imagePathA=""
 			$("#myImageA").attr('src','');
 			
-			trans_or_cus='<fieldset data-role="controlgroup" data-type="horizontal" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
+			trans_or_cus='<fieldset data-role="controlgroup" data-theme="c"><input type="radio" name="transCus" id="trans" value="Transporter"><label for="trans">Transporter</label><input type="radio" name="transCus" id="cus" value="Customer"><label for="cus">Customer</label></fieldset>';                   
 			
 			if (transCusFlag==0){
 				$("#transCusDiv").html(trans_or_cus);	
@@ -660,7 +660,7 @@ function syncDataTruckInfo(){
 //Truck Info
 function getTruckPalateImage() {
 	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 10,
-	destinationType: Camera.DestinationType.FILE_URI });		
+	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
 }
 
 function onSuccessA(imageURI) {		
