@@ -6,7 +6,7 @@
 //var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
 //test
-var apipath="http://eapps001.cloudapp.net/quem/syncmobile_150829/";
+var apipath="http://e3.businesssolutionapps.com/quem/syncmobile_150829/";
 
 var plateNo="";	
 		
@@ -255,7 +255,7 @@ function check_user() {
 				localStorage.sync_code=0
 			}
 			
-			//alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code);
+			alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code);
 										
 			$.ajax({
 					 type: 'POST',
