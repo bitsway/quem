@@ -6,7 +6,7 @@
 //var apipath="http://127.0.0.1:8000/quem/syncmobile_150829/";
 
 //test
-var apipath="http://eapps001.cloudapp.net/quem_test/syncmobile_150829/";
+var apipath="http://eapps001.cloudapp.net/quem/syncmobile_150829/";
 
 var plateNo="";	
 		
@@ -45,24 +45,25 @@ var url ="";
 //var get_time=d.getTime();
 
 
-function getLocationInfoAch() {	
+/*function getLocationInfoAch() {	
 	var options = { enableHighAccuracy: false};
 	
 	navigator.geolocation.getCurrentPosition(onSuccess, onError, options);		
 	$(".errorChk").html("Confirming location. Please wait.");
-}
+	
+}*/
 // onSuccess Geolocation
-function onSuccess(position) {
+/*function onSuccess(position) {
 	$("#q_lat").val(position.coords.latitude);
 	$("#q_long").val(position.coords.longitude);
 	$(".errorChk").html("Location Confirmed");
-}
+}*/
 // onError Callback receives a PositionError object
-function onError(error) {
+/*function onError(error) {
    $("#q_lat").val(0);
    $("#q_long").val(0);
    $(".errorChk").html("Failed to Confirmed Location.");
-}
+}*/
 
 
 $(document).ready(function(){
@@ -390,7 +391,7 @@ function newEntry(){
 			}
 
 			
-			getLocationInfoAch()				
+			//getLocationInfoAch()				
 					
 			url = "#newEntryPage";
 			$.mobile.navigate(url);
@@ -603,9 +604,7 @@ function syncDataTruckInfo(){
 									
 									}  
 								
-								
 								//$("#transCus input:[type='radio']").checkboxradio().checkboxradio('refresh');
-										
 								//$('input:[name=transCus]:radio:checked').checkboxradio('refresh');		
 								transCusVal="";	
 								$( "input:radio[name='transCus'][value='"+transCusVal+"']" ).attr('checked','');
@@ -659,8 +658,10 @@ function syncDataTruckInfo(){
 
 //Truck Info
 function getTruckPalateImage() {
-	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 10,
-	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });		
+	navigator.camera.getPicture(onSuccessA, onFailA, { quality: 50,
+	targetWidth: 300,
+	destinationType: Camera.DestinationType.FILE_URI,correctOrientation: true });
+	
 }
 
 function onSuccessA(imageURI) {		
@@ -695,7 +696,7 @@ function uploadPhotoTruckPlate(imageURI, imageName) {
     options.params = params;
 
     var ft = new FileTransfer();
-	ft.upload(imageURI, encodeURI("http://i01.businesssolutionapps.com/que_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
+	ft.upload(imageURI, encodeURI("http://e4.businesssolutionapps.com/q_image/quem_image_sync/fileUploader/"),winTruckInfo,onfail,options);
 	
 }
 
