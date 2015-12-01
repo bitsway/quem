@@ -255,7 +255,7 @@ function check_user() {
 				localStorage.sync_code=0
 			}
 			
-			alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code);
+//			alert(apipath+'passwordCheck?cid=LAFARGE&mobile='+user_id+'&password='+encodeURIComponent(user_pass)+'&sync_code='+localStorage.sync_code);
 										
 			$.ajax({
 					 type: 'POST',
